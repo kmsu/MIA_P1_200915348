@@ -66,6 +66,7 @@ func analizar(entrada string) {
 		}
 
 	} else if strings.ToLower(parametros[0]) == "mkdisk" {
+		//MKDISK
 		//crea un archivo binario que simula un disco con su respectivo MBR
 		if len(parametros) > 1 {
 			Comandos.Mkdisk(parametros)
@@ -73,7 +74,16 @@ func analizar(entrada string) {
 			fmt.Println("MKDISK ERROR: parametros no encontrados")
 		}
 
+	} else if strings.ToLower(parametros[0]) == "rmdisk" {
+		//RMDISK
+		if len(parametros) > 1 {
+			Comandos.Rmdisk(parametros)
+		} else {
+			fmt.Println("RMDISK ERROR: parametros no encontrados")
+		}
+
 	} else if strings.ToLower(parametros[0]) == "fdisk" {
+		//FDISK
 		if len(parametros) > 1 {
 			Comandos.Fdisk(parametros)
 		} else {

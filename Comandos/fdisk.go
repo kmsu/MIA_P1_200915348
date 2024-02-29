@@ -48,14 +48,14 @@ func Fdisk(parametros []string) {
 			//PATH
 		} else if strings.ToLower(tmp[0]) == "-driveletter" {
 			//homonimo al path
-			letter = tmp[1] //verificar si es necesario quitar los espacios a la derecha
+			letter = strings.ToUpper(tmp[1]) //Debe estar en mayusculas
 			//Se valida si existe el disco ingresado
 			carpeta := "./MIA/P1/" //Ruta (carpeta donde se guardara el disco)
 			extension := ".dsk"
 			path := carpeta + string(letter) + extension
 			_, err := os.Stat(path)
 			if os.IsNotExist(err) {
-				fmt.Println("FDISK Error: El disco no existe")
+				fmt.Println("FDISK Error: El disco ", letter, " no existe")
 				paramC = false
 				break // Terminar el bucle porque encontramos un nombre único
 			}
@@ -124,7 +124,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//ADD
-		} else if strings.ToLower(tmp[0]) == "add" {
+		} else if strings.ToLower(tmp[0]) == "-add" {
 			var err error
 			add, err = strconv.Atoi(tmp[1]) //se convierte el valor en un entero
 			if err != nil {
@@ -252,6 +252,7 @@ func Fdisk(parametros []string) {
 				//a esta altura sigue abierto el archivo
 			} else if opcion == 1 {
 				//ADD
+				//validar que venga unit
 				add = add * unit
 				if add < 0 {
 					fmt.Println("Reducir espacio")
@@ -261,6 +262,7 @@ func Fdisk(parametros []string) {
 					fmt.Println("FDISK Error. 0 no es un valor valido para aumentar o disminuir particiones")
 				}
 			} else if opcion == 2 {
+				//validar que venga name y driveletter
 				fmt.Println("eliminar particion")
 			} else {
 				//Creo se puede quitar porque nunca va a entrar aqui
