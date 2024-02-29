@@ -1,0 +1,13 @@
+#execute -path=prueba.txt
+#mkdisk -size=2000 -unit= k -fit=wf
+mkdisk -size=1
+
+
+
+fdisk -size=-300 -driveletter=A -name=Particion1
+fdisk -driveletter=A -name=Particion2
+fdisk -size="hola" -driveletter=A -name=Particion1
+fdisk -size=300 -driveletter=A -name=Particion1
+fdisk -size=300 -driveletter=A -name=Particion1 -unit=k
+fdisk -size=300 -driveletter=A -name=Particion3 -type=l
+fdisk -size=300 -driveletter=A -name=Particion3 -fit=bf
