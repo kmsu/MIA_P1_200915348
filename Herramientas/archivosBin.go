@@ -14,7 +14,7 @@ import (
 
 // funcion para crear un archivo binario
 func CrearDisco(path string) error {
-	//asegurar que exista la ruta (el directorio)
+	//asegurar que exista la ruta (el directorio) creando la ruta
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
 		fmt.Println("Error al crear el disco, path: ", err)
@@ -64,7 +64,13 @@ func ReadObject(file *os.File, data interface{}, position int64) error {
 	return nil
 }
 
-func RepGraphizMBR(path string, contenido string) error {
+func RepGraphizMBR(path string, contenido string, nombre string) error {
+	//asegurar la ruta
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		fmt.Println("Error al crear el reporte, path: ", err)
+		return err
+	}
 	// Abrir o crear un archivo para escritura
 	file, err := os.Create(path)
 	if err != nil {
@@ -79,10 +85,13 @@ func RepGraphizMBR(path string, contenido string) error {
 		fmt.Println("Error al escribir en el archivo:", err)
 		return err
 	}
-	cmd := exec.Command("dot", "-Tpng", "Mbr.dot", "-o", "Mbr.png")
+
+	rep2 := dir + "/" + nombre + ".png"
+	cmd := exec.Command("dot", "-Tpng", path, "-o", rep2)
 	err = cmd.Run()
 	if err != nil {
 		log.Fatalf("Error al generar el reporte PNG: %v", err)
 	}
+
 	return err
 }

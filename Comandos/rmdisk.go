@@ -15,7 +15,7 @@ func Rmdisk(parametros []string) {
 		return
 	}
 
-	if strings.ToLower(tmp[0]) == "-driveletter" {
+	if strings.ToLower(tmp[0]) == "driveletter" {
 		letter := strings.ToUpper(tmp[1]) //Debe estar en mayusculas
 		carpeta := "./MIA/P1/"            //Ruta (carpeta donde se guardara el disco)
 		extension := ".dsk"

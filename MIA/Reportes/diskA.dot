@@ -1,0 +1,22 @@
+digraph { 
+node [ shape=none ] 
+TablaReportNodo [ label = < <table border="1"> 
+<tr> 
+ <td bgcolor='SlateBlue'  ROWSPAN='3'> MBR </td>
+ <td bgcolor='#808080'  ROWSPAN='3'> ESPACIO LIBRE <br/> 0.98 % </td> 
+  <td bgcolor='LightSkyBlue' ROWSPAN='3'> PRIMARIA <br/> 7.81 % </td>
+ <td bgcolor='#808080'  ROWSPAN='3'> ESPACIO LIBRE <br/> 1.95 % </td> 
+  <td bgcolor='SteelBlue' COLSPAN='1'> EXTENDIDA </td>
+ <td bgcolor='#808080'  ROWSPAN='3'> ESPACIO LIBRE <br/> 2.93 % </td> 
+  <td bgcolor='LightSkyBlue' ROWSPAN='3'> PRIMARIA <br/> 16.60 % </td>
+ <td bgcolor='#808080'  ROWSPAN='3'> ESPACIO LIBRE <br/> 7.81 % </td> 
+  <td bgcolor='LightSkyBlue' ROWSPAN='3'> PRIMARIA <br/> 29.30 % </td>
+ <td bgcolor='#808080'  ROWSPAN='3'> ESPACIO LIBRE <br/> 9.67 % </td> 
+</tr>
+
+<tr> 
+ <td bgcolor='#808080' ROWSPAN='2'> LIBRE <br/> 6.84 % </td> 
+</tr>
+
+</table> > ]
+}

@@ -1,0 +1,56 @@
+#execute -path=prueba.txt
+
+#mkdisk -size=1 -unit=k -fit=wf
+
+#rmdisk -driveletter=B
+
+#Ingreso de particiones
+#fdisk -driveletter=A -unit=b -fit=ff -type=P -size=859 -name=Particion1
+#fdisk -driveletter=A -unit=b -fit=ff -type=P -size=200 -name=Particion2
+#fdisk -driveletter=A -unit=b -fit=ff -type=E -size=300 -name=Particion3
+#fdisk -driveletter=A -unit=b -fit=ff -type=P -size=260 -name=Particion4
+#fdisk -driveletter=A -unit=b -fit=ff -type=E -size=259 -name=Particion5
+
+#Eliminar particiones para pruebas
+#fdisk -size=283 -type=P -unit=b -fit=bf -driveletter=A -name=Particion1 -delete=full
+fdisk -driveletter=A -delete=full -name=Particion2
+#fdisk -driveletter=A -delete=full -name=Particion3
+fdisk -driveletter=A -delete=full -name=Particion4
+fdisk -driveletter=A -delete=full -name=Particion5
+fdisk -driveletter=A -delete=full -name=Particion6
+
+#Ingreso de particiones para pruebas
+fdisk -driveletter=A -unit=b -fit=ff -type=P -size=10 -name=Particion1
+fdisk -driveletter=A -unit=b -fit=ff -type=P -size=20 -name=Particion2
+fdisk -driveletter=A -unit=b -fit=ff -type=E -size=30 -name=Particion3
+fdisk -driveletter=A -unit=b -fit=ff -type=P -size=259 -name=Particion4
+
+#fdisk -driveletter=A -unit=b -fit=ff -type=P -size=10 -name=Particion5
+
+#Eliminar particiones
+fdisk -size=283 -type=P -unit=b -fit=bf -driveletter=A -name=Particion1 -delete=full
+#fdisk -driveletter=A -delete=full -name=Particion2
+#fdisk -driveletter=A -delete=full -name=Particion3
+#fdisk -driveletter=A -delete=full -name=Particion4
+
+#Reducir particion
+#fdisk -add=-100 -size=10 -unit=b -driveletter=A -name=Particion2
+#fdisk -add=-120 -size=10 -unit=b -driveletter=A -name=Particion3
+
+#Reingresar particiones para hacer pruebas
+fdisk -driveletter=A -unit=b -fit=ff -type=P -size=140 -name=Particion5
+
+#Eliminar las nuevas particiones
+fdisk -driveletter=A -delete=full -name=Particion3
+#fdisk -driveletter=A -delete=full -name=Particion4
+#fdisk -driveletter=A -delete=full -name=Particion5
+
+#Reducir particion para caso 12
+fdisk -add=-40 -size=10 -unit=b -driveletter=A -name=Particion4
+
+#Ingreso de particiones a partir del caso 9
+fdisk -driveletter=A -unit=b -fit=ff -type=P -size=401 -name=Particion6
+
+#Reporte
+rep -id=A118 -path=/MIA/Reportes/mbrA.jpg -name=mbr
+rep -id=A118 -path=/MIA/Reportes/diskA.jpg -name=disk

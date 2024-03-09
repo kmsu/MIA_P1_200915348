@@ -1,0 +1,22 @@
+if guardar {
+    mbr.Partitions[count].Size = int32(sizeNewPart)
+    mbr.Partitions[count].Start = newStart
+    mbr.Partitions[count].Correlative = int32(count + 1)
+    copy(mbr.Partitions[count].Name[:], name)
+    copy(mbr.Partitions[count].Fit[:], fit)
+    copy(mbr.Partitions[count].Status[:], "I")
+    copy(mbr.Partitions[count].Type[:], typee)
+
+    //sobreescribir el mbr
+    if err := Herramientas.WriteObject(disco, mbr, 0); err != nil {
+        return
+    }
+    //para verificar que lo guardo
+    var TempMBR2 Structs.MBR
+    // Read object from bin file
+    if err := Herramientas.ReadObject(disco, &TempMBR2, 0); err != nil {
+        return
+    }
+    fmt.Println("\nParticion con nombre " + name + " creada exitosamente")
+    Structs.PrintMBR(TempMBR2)
+}

@@ -37,7 +37,7 @@ func Fdisk(parametros []string) {
 		}
 
 		//SIZE
-		if strings.ToLower(tmp[0]) == "-size" {
+		if strings.ToLower(tmp[0]) == "size" {
 			sizeInit = true
 			var err error
 			size, err = strconv.Atoi(tmp[1]) //se convierte el valor en un entero
@@ -46,7 +46,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//PATH
-		} else if strings.ToLower(tmp[0]) == "-driveletter" {
+		} else if strings.ToLower(tmp[0]) == "driveletter" {
 			//homonimo al path
 			letter = strings.ToUpper(tmp[1]) //Debe estar en mayusculas
 			//Se valida si existe el disco ingresado
@@ -61,14 +61,14 @@ func Fdisk(parametros []string) {
 			}
 
 			//NAME
-		} else if strings.ToLower(tmp[0]) == "-name" {
+		} else if strings.ToLower(tmp[0]) == "name" {
 			// Eliminar comillas
 			name = strings.ReplaceAll(tmp[1], "\"", "")
 			// Eliminar espacios en blanco al final
 			name = strings.TrimSpace(name)
 
 			//UNIT
-		} else if strings.ToLower(tmp[0]) == "-unit" {
+		} else if strings.ToLower(tmp[0]) == "unit" {
 			//k ya esta predeterminado
 			if strings.ToLower(tmp[1]) == "b" {
 				//asigno el valor del parametro en su respectiva variable
@@ -82,7 +82,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//TYPE
-		} else if strings.ToLower(tmp[0]) == "-type" {
+		} else if strings.ToLower(tmp[0]) == "type" {
 			//p esta predeterminado
 			if strings.ToLower(tmp[1]) == "e" {
 				typee = "E"
@@ -95,7 +95,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//FIT
-		} else if strings.ToLower(tmp[0]) == "-fit" {
+		} else if strings.ToLower(tmp[0]) == "fit" {
 			//Si el ajuste es BF (best fit)
 			if strings.ToLower(tmp[1]) == "bf" {
 				//asigno el valor del parametro en su respectiva variable
@@ -112,7 +112,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//DELETE
-		} else if strings.ToLower(tmp[0]) == "-delete" {
+		} else if strings.ToLower(tmp[0]) == "delete" {
 			if strings.ToLower(tmp[1]) == "full" {
 				if opcion == 0 {
 					opcion = 2 // 2 es delete
@@ -124,7 +124,7 @@ func Fdisk(parametros []string) {
 			}
 
 			//ADD
-		} else if strings.ToLower(tmp[0]) == "-add" {
+		} else if strings.ToLower(tmp[0]) == "add" {
 			var err error
 			add, err = strconv.Atoi(tmp[1]) //se convierte el valor en un entero
 			if err != nil {
@@ -183,66 +183,69 @@ func Fdisk(parametros []string) {
 
 			//CREAR (opcion: 0 -> crear; 1 -> add; 2 -> delete)
 			if opcion == 0 {
-				sizeNewPart := size * unit //Tamaño de la nueva particion (tamaño * unidades)
-				isPartExtend := false      //Indica si la particion es extendida
-				isName := true             //Valida si el nombre no se repite (true no se repite)
-				//guardar := false           //Indica si se debe guardar la particion, es decir, escribir en el disco
 
 				//Si la particion es tipo extendida validar que no exista alguna extendida
+				isPartExtend := true //Indica si aun esta disponible la particion extendida
 				if typee == "E" {
 					for i := 0; i < 4; i++ {
 						tipo := string(mbr.Partitions[i].Type[:])
-						//VER QUE IMPRIME EN TIPO PARA MANEJAR EL ELSE. PARA VER QUE DEVUELVE SI NO EXISTE AUN LA PARTICION
-						if tipo != "E" {
-							isPartExtend = true
-						} else {
-							fmt.Println("FDISK Error. Ya existe una particion extendida")
+						if tipo == "E" {
 							isPartExtend = false
+							fmt.Println("FDISK Error. Ya existe una particion extendida")
 							break
 						}
 					}
 				}
 
 				//verificar si  el nombre existe en las particiones primarias o extendida
+				isName := true //Valida si el nombre no se repite (true no se repite)
 				for i := 0; i < 4; i++ {
-					nombre := Structs.GetNamePart(mbr, i)
+					nombre := Structs.GetName(string(mbr.Partitions[i].Name[:]))
 					if nombre == name {
-						fmt.Println("FDISK Error. Ya existe la particion : ", name)
 						isName = false
+						fmt.Println("FDISK Error. Ya existe la particion : ", name)
 						break
 					}
 				}
 
+				if isName {
+					//validar que tampoco exista en las logicas
+					//fmt.Println("Verificar que no exista una logica con el nombre que se quiere agregar")
+					fmt.Println("")
+				}
+
 				//INGRESO DE PARTICIONES PRIMARIAS Y/O EXTENDIDA (SIN LOGICAS)
+				sizeNewPart := size * unit //Tamaño de la nueva particion (tamaño * unidades)
+				guardar := false           //Indica si se debe guardar la particion, es decir, escribir en el disco
+				var newPart Structs.Partition
 				if (typee == "P" || isPartExtend) && isName { //para que  isPartExtend sea true, typee tendra que ser "E"
-					//obtener el tamaño del mbr (el que ocupa fisicamente )
-					sizeMBR := int32(binary.Size(mbr))
-					fmt.Println("Tamaño fisico de mbr", sizeMBR)
+					sizeMBR := int32(binary.Size(mbr)) //obtener el tamaño del mbr (el que ocupa fisicamente: 165)
 					//Para manejar los demas ajustes hacer un if del fit para llamar a la funcion adecuada
 					//F = primer ajuste; B = mejor ajuste; else -> peor ajuste
 
-					//INSERTAR PARTICION
-					//if mbr.Partitions[0].Size == 0 {
-					mbr.Partitions[0].Size = int32(sizeNewPart)
-					mbr.Partitions[0].Start = sizeMBR
-					mbr.Partitions[0].Correlative = int32(1)
-					copy(mbr.Partitions[0].Name[:], name)
-					copy(mbr.Partitions[0].Fit[:], fit)
-					copy(mbr.Partitions[0].Status[:], "I")
-					copy(mbr.Partitions[0].Type[:], typee)
-					//}
-					//sobreescribir el mbr
-					if err := Herramientas.WriteObject(disco, mbr, 0); err != nil {
-						return
-					}
+					//INSERTAR PARTICION (Primer ajuste)
+					mbr, newPart = primerAjuste(mbr, typee, sizeMBR, int32(sizeNewPart), name, fit) //int32(sizeNewPart) es para castear el int a int32 que es el tipo que tiene el atributo en el struct Partition
+					guardar = newPart.Size != 0
 
-					//para verificar que lo guardo
-					var TempMBR2 Structs.MBR
-					// Read object from bin file
-					if err := Herramientas.ReadObject(disco, &TempMBR2, 0); err != nil {
-						return
+					//escribimos el MBR en el archivo. Lo que no se llegue a escribir en el archivo (aqui) se pierde, es decir, los cambios no se guardan
+					if guardar {
+						//sobreescribir el mbr
+						if err := Herramientas.WriteObject(disco, mbr, 0); err != nil {
+							return
+						}
+
+						//para verificar que lo guardo
+						var TempMBR2 Structs.MBR
+						// Read object from bin file
+						if err := Herramientas.ReadObject(disco, &TempMBR2, 0); err != nil {
+							return
+						}
+						fmt.Println("\nParticion con nombre " + name + " creada exitosamente")
+						Structs.PrintMBR(TempMBR2)
+					} else {
+						//Lo podría eliminar pero tendria que modificar en el metodo del ajuste todos los errores para que aparezca el nombre que se intento ingresar como nueva particion
+						fmt.Println("FDISK Error. No se puede crear la nueva particion con nombre: ", name)
 					}
-					Structs.PrintMBR(TempMBR2)
 
 					// INGRESO DE PARTICIONES LOGICAS
 				} else if typee == "L" && isName {
@@ -250,20 +253,165 @@ func Fdisk(parametros []string) {
 					//validar que el nombre no exista en la logicas si el tipo es "L"
 				}
 				//a esta altura sigue abierto el archivo
+
+				//------------------------------ADD---------------------
 			} else if opcion == 1 {
-				//ADD
-				//validar que venga unit
 				add = add * unit
+				//-------------------------si se quita espacio----------------------------------------------------------------------
+				//Particiones extendida o primarias
 				if add < 0 {
 					fmt.Println("Reducir espacio")
+					reducir := true //Si cambia a false es que redujo una de las primarias o la extendida
+					for i := 0; i < 4; i++ {
+						nombre := Structs.GetName(string(mbr.Partitions[i].Name[:]))
+						if nombre == name {
+							reducir = false
+							newSize := mbr.Partitions[i].Size + int32(add)
+							if newSize > 0 {
+								mbr.Partitions[i].Size += int32(add)
+								if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+									return
+								}
+								fmt.Println("Particion con nombre ", name, " se redujo correctamente")
+							} else {
+								fmt.Println("FDISK Error. El tamaño que intenta eliminar es demasiado grande")
+							}
+							break //para que ya no siga recorriendo si ya encontro la particion independientemente si se pudo o no reducir
+						}
+					}
+
+					//particiones logicas
+					if reducir {
+						//Reducir logica, si se reduce alguna logica cambiar reducir a false
+						fmt.Println("Reducir logicas")
+					}
+
+					if reducir {
+						fmt.Println("FDISK Error. No existe la particion a reducir")
+					}
+
+					//------------------Si se aumenta espacio-----------------------------------------------------------------------
 				} else if add > 0 {
 					fmt.Println("aumentar espacio")
+					//Primarias y/o extendida
+					evaluar := 0
+					//Si el aumento es en particion 1
+					if Structs.GetName(string(mbr.Partitions[0].Name[:])) == name {
+						if mbr.Partitions[1].Start == 0 {
+							if mbr.Partitions[2].Start == 0 {
+								if mbr.Partitions[3].Start == 0 {
+									evaluar = int(mbr.MbrSize - mbr.Partitions[0].GetEnd())
+								} else {
+									evaluar = int(mbr.Partitions[3].Start - mbr.Partitions[0].GetEnd())
+								}
+							} else {
+								evaluar = int(mbr.Partitions[2].Start - mbr.Partitions[0].GetEnd())
+							}
+						} else {
+							evaluar = int(mbr.Partitions[1].Start - mbr.Partitions[0].GetEnd())
+						}
+
+						//evaluar > 0 -> si hay espacio para aumentar. add <= evaluar -> si lo que quiero aumentar cabe en el espacio disponible
+						if evaluar > 0 && add <= evaluar {
+							//aumenta el tamaño de 1
+							mbr.Partitions[0].Size += int32(add)
+							if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+								return
+							}
+							fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+						} else {
+							fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+						}
+						//Particion 2
+					} else if Structs.GetName(string(mbr.Partitions[1].Name[:])) == name {
+						if mbr.Partitions[2].Start == 0 {
+							if mbr.Partitions[3].Start == 0 {
+								evaluar = int(mbr.MbrSize - mbr.Partitions[1].GetEnd())
+							} else {
+								evaluar = int(mbr.Partitions[3].Start - mbr.Partitions[1].GetEnd())
+							}
+						} else {
+							evaluar = int(mbr.Partitions[2].Start - mbr.Partitions[1].GetEnd())
+						}
+						//aumenta el tamaño de 2
+						if evaluar > 0 && add <= evaluar {
+							mbr.Partitions[1].Size += int32(add)
+							if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+								return
+							}
+							fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+						} else {
+							fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+						}
+						//Particion 3
+					} else if Structs.GetName(string(mbr.Partitions[2].Name[:])) == name {
+						if mbr.Partitions[3].Start == 0 {
+							evaluar = int(mbr.MbrSize - mbr.Partitions[2].GetEnd())
+						} else {
+							evaluar = int(mbr.Partitions[3].Start - mbr.Partitions[2].GetEnd())
+						}
+						//aumenta el tamaño de 3
+						if evaluar > 0 && add <= evaluar {
+							mbr.Partitions[2].Size += int32(add)
+							if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+								return
+							}
+							fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+						} else {
+							fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+						}
+						//Particion 4
+					} else if Structs.GetName(string(mbr.Partitions[3].Name[:])) == name {
+						evaluar = int(mbr.MbrSize - mbr.Partitions[3].GetEnd())
+						//aumenta el tamaño de 4
+						if evaluar > 0 && add <= evaluar {
+							mbr.Partitions[3].Size += int32(add)
+							if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+								return
+							}
+							fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+						} else {
+							fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+						}
+					} else {
+						//Verificar si fueran las logicas
+						fmt.Println("reducir logicas")
+						//si despues de intentar reducir las logicas no encontro nada, reportar el error que no existe la particion
+					}
 				} else {
 					fmt.Println("FDISK Error. 0 no es un valor valido para aumentar o disminuir particiones")
 				}
+
+				//--------------------- Eliminar particiones -----------------------------------------------------
 			} else if opcion == 2 {
-				//validar que venga name y driveletter
 				fmt.Println("eliminar particion")
+				//-------- primarias o extendida-----------------------------------------------------
+				del := true //para saber si se elimino la particion (true es que no se elimino, esto para facilitar el if que valida esta varible)
+				for i := 0; i < 4; i++ {
+					nombre := Structs.GetName(string(mbr.Partitions[i].Name[:]))
+					if nombre == name {
+						var newPart Structs.Partition
+						mbr.Partitions[i] = newPart
+						if err := Herramientas.WriteObject(disco, mbr, 0); err != nil { //Sobre escribir el mbr
+							return
+						}
+						del = false
+						fmt.Println("particion con nombre ", name, " eliminada")
+						break
+					}
+				}
+
+				//Eliminar logicas
+				if del {
+					//si elimina una logica cambia a false
+					fmt.Println("Eliminar logicas")
+				}
+
+				//Valido si no se elimino nada para reportar el error
+				if del {
+					fmt.Println("FDISK Error. No se encontro la particion a eliminar")
+				}
+
 			} else {
 				//Creo se puede quitar porque nunca va a entrar aqui
 				fmt.Println("FDISK Error. Operación desconocida (operaciones aceptadas: crear, modificar o eliminar)")
@@ -277,3 +425,348 @@ func Fdisk(parametros []string) {
 		}
 	} //Fin if paramC
 } //Fin FDisk
+
+func primerAjuste(mbr Structs.MBR, typee string, sizeMBR int32, sizeNewPart int32, name string, fit string) (Structs.MBR, Structs.Partition) {
+	var newPart Structs.Partition
+	var noPart Structs.Partition //para revertir el set info (simula volverla null)
+
+	//PARTICION 1 (libre) - (size = 0 no se ha creado)
+	if mbr.Partitions[0].Size == 0 {
+		newPart.SetInfo(typee, fit, sizeMBR, sizeNewPart, name, 1)
+		if mbr.Partitions[1].Size == 0 {
+			if mbr.Partitions[2].Size == 0 {
+				//caso particion 4 (no existe)
+				if mbr.Partitions[3].Size == 0 {
+					//859 <= 1024 - 165
+					if sizeNewPart <= mbr.MbrSize-sizeMBR {
+						mbr.Partitions[0] = newPart
+					} else {
+						newPart = noPart
+						fmt.Println("FDISK Error. Espacio insuficiente")
+					}
+				} else {
+					//particion 4 existe
+					// 600 < 765 - 165 (600 maximo aceptado)
+					if sizeNewPart <= mbr.Partitions[3].Start-sizeMBR {
+						mbr.Partitions[0] = newPart
+					} else {
+						//Si cabe despues de 4
+						newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+						if sizeNewPart <= mbr.MbrSize-newPart.Start {
+							mbr.Partitions[2] = mbr.Partitions[3]
+							mbr.Partitions[3] = newPart
+							//Reordeno el correlativo para que coincida con el numero de particion en que se guardo
+							mbr.Partitions[2].Correlative = 3
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					}
+				}
+				//Fin no existe particion 4
+			} else {
+				// 3 existe
+				//entre mbr y 3 -> 300 <= 465 -165
+				if sizeNewPart <= mbr.Partitions[2].Start-sizeMBR {
+					mbr.Partitions[0] = newPart
+				} else {
+					//si no cabe entre el mbr y 3 debe ser despues de 3, es decir, en 4
+					newPart.SetInfo(typee, fit, mbr.Partitions[2].GetEnd(), sizeNewPart, name, 4)
+					if mbr.Partitions[3].Size == 0 {
+						if sizeNewPart <= mbr.MbrSize-newPart.Start {
+							mbr.Partitions[3] = newPart
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} else {
+						//4 existe
+						//hay espacio entre 3 y 4
+						if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = newPart
+							//Reordenando los correlativos
+							mbr.Partitions[1].Correlative = 2
+							mbr.Partitions[2].Correlative = 3 //new part traia 4 y quedo en la tercer particion por eso tambien se modifica aqui
+						} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[3].GetEnd() {
+							//Hay espacio despues de 4
+							newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = mbr.Partitions[3]
+							mbr.Partitions[3] = newPart
+							//reconfiguro los correlativos
+							mbr.Partitions[1].Correlative = 2
+							mbr.Partitions[2].Correlative = 3
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} //fin si hay espacio entre 3 y 4
+				} //fin si no cabe antes de 3
+			} //fin 3 existe
+		} else {
+			//2 existe
+			//Si la nueva particion se puede guardar antes de 2
+			if sizeNewPart <= mbr.Partitions[1].Start-sizeMBR {
+				mbr.Partitions[0] = newPart
+			} else {
+				//Si no cabe entre mbr y 2
+				//Validar si existen 3 y 4
+				newPart.SetInfo(typee, fit, mbr.Partitions[1].GetEnd(), sizeNewPart, name, 3)
+				if mbr.Partitions[2].Size == 0 {
+					if mbr.Partitions[3].Size == 0 {
+						if sizeNewPart <= mbr.MbrSize-newPart.Start {
+							mbr.Partitions[2] = newPart
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} else {
+						//4 existe (estamos entre 2 y 4)
+						//62 < 69-6 (62 maximo aceptado)
+						if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+							mbr.Partitions[2] = newPart
+						} else {
+							//Si no cabe entre 2 y 4, ver si cabe despues de 4
+							newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+							if sizeNewPart <= mbr.MbrSize-newPart.Start { //1 <= 100-99
+								mbr.Partitions[2] = mbr.Partitions[3]
+								mbr.Partitions[3] = newPart
+								//reordeno correlativos
+								mbr.Partitions[2].Correlative = 3
+							} else {
+								newPart = noPart
+								fmt.Println("FDISK Error. Espacio insuficiente")
+							}
+						} //Fin si cabe antes o despues de 4
+					} //fin de 4 existe o no existe
+				} else {
+					//3 existe
+					//entre 2 y 3
+					if sizeNewPart <= mbr.Partitions[2].Start-newPart.Start {
+						mbr.Partitions[0] = mbr.Partitions[1]
+						mbr.Partitions[1] = newPart
+						//Reordeno correlativos
+						mbr.Partitions[0].Correlative = 1
+						mbr.Partitions[1].Correlative = 2
+					} else if mbr.Partitions[3].Size == 0 {
+						//entre 3 y el final
+						//cambiamos el inicio de la nueva particion porque 3 existe y no cabe antes de 3
+						newPart.SetInfo(typee, fit, mbr.Partitions[2].GetEnd(), sizeNewPart, name, 4)
+						if sizeNewPart <= mbr.MbrSize-newPart.Start {
+							mbr.Partitions[3] = newPart
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} else {
+						//si 4 existe
+						//hay espacio entre 3 y 4
+						newPart.SetInfo(typee, fit, mbr.Partitions[2].GetEnd(), sizeNewPart, name, 3)
+						if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+							mbr.Partitions[0] = mbr.Partitions[1]
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = newPart
+							//Reordeno correlativos
+							mbr.Partitions[0].Correlative = 1
+							mbr.Partitions[1].Correlative = 2
+						} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[3].GetEnd() {
+							//entre 4 y el final
+							newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+							mbr.Partitions[0] = mbr.Partitions[1]
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = mbr.Partitions[3]
+							mbr.Partitions[3] = newPart
+							//Reordeno correlativos
+							mbr.Partitions[0].Correlative = 1
+							mbr.Partitions[1].Correlative = 2
+							mbr.Partitions[2].Correlative = 3
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} //Fin si 4 existe o no (3 activa)
+				} //Fin 3 existe o no existe
+			} //Fin entre 2 y final (antes de 2 o depues de 2)
+		} //Fin 2 existe o no existe
+		//Fin de 1 no existe
+
+		//PARTICION 2 (no existe)
+	} else if mbr.Partitions[1].Size == 0 {
+		//Si hay espacio entre el mbr y particion 1
+		newPart.SetInfo(typee, fit, sizeMBR, sizeNewPart, name, 1)
+		if sizeNewPart <= mbr.Partitions[0].Start-newPart.Start { //particion 1 ya existe (debe existir para entrar a este bloque)
+			mbr.Partitions[1] = mbr.Partitions[0]
+			mbr.Partitions[0] = newPart
+			//Reordeno correlativo
+			mbr.Partitions[1].Correlative = 2
+		} else {
+			//Si no hay espacio antes de particion 1
+			newPart.SetInfo(typee, fit, mbr.Partitions[0].GetEnd(), sizeNewPart, name, 2) //el nuevo inicio es donde termina 1
+			if mbr.Partitions[2].Size == 0 {
+				if mbr.Partitions[3].Size == 0 {
+					if sizeNewPart <= mbr.MbrSize-newPart.Start {
+						mbr.Partitions[1] = newPart
+					} else {
+						newPart = noPart
+						fmt.Println("FDISK Error. Espacio insuficiente")
+					}
+				} else {
+					//4 existe
+					//entre 1 y 4
+					if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+						mbr.Partitions[1] = newPart
+					} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[3].GetEnd() {
+						//despues de 4
+						newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+						mbr.Partitions[2] = mbr.Partitions[3]
+						mbr.Partitions[3] = newPart
+						//Reordeno correlativo
+						mbr.Partitions[2].Correlative = 3
+					} else {
+						newPart = noPart
+						fmt.Println("FDISK Error. Espacio insuficiente")
+					}
+				} //Fin 4 existe o no existe
+			} else {
+				//3 Activa
+				//entre 1 y 3
+				if sizeNewPart <= mbr.Partitions[2].Start-newPart.Start {
+					mbr.Partitions[1] = newPart
+				} else {
+					//despues de 3
+					newPart.SetInfo(typee, fit, mbr.Partitions[2].GetEnd(), sizeNewPart, name, 3)
+					if mbr.Partitions[3].Size == 0 {
+						if sizeNewPart <= mbr.MbrSize-newPart.Start {
+							mbr.Partitions[3] = newPart
+							//corrijo el correlativo
+							mbr.Partitions[3].Correlative = 4
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} else {
+						//4 existe
+						//entre 3 y 4
+						if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = newPart
+							//Corrijo el correlativo
+							mbr.Partitions[1].Correlative = 2
+						} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[3].GetEnd() {
+							//Despues de 4
+							newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+							mbr.Partitions[1] = mbr.Partitions[2]
+							mbr.Partitions[2] = mbr.Partitions[3]
+							mbr.Partitions[3] = newPart
+							//Corrijo los correlativos
+							mbr.Partitions[1].Correlative = 2
+							mbr.Partitions[2].Correlative = 3
+						} else {
+							newPart = noPart
+							fmt.Println("FDISK Error. Espacio insuficiente")
+						}
+					} //fin 4 existe o no existe
+				} //Fin para entre 1 y 3, y despues de 3
+			} //Fin 3 existe o no existe
+		} //Fin antes o despues de particion 1
+		//Fin particion 2 no existe
+
+		//PARTICION 3
+	} else if mbr.Partitions[2].Size == 0 {
+		//antes de 1
+		newPart.SetInfo(typee, fit, sizeMBR, sizeNewPart, name, 1)
+		if sizeNewPart <= mbr.Partitions[0].Start-newPart.Start {
+			mbr.Partitions[2] = mbr.Partitions[1]
+			mbr.Partitions[1] = mbr.Partitions[0]
+			mbr.Partitions[0] = newPart
+			//Reordeno los correlativos
+			mbr.Partitions[2].Correlative = 3
+			mbr.Partitions[1].Correlative = 2
+		} else {
+			//entre 1 y 2
+			newPart.SetInfo(typee, fit, mbr.Partitions[0].GetEnd(), sizeNewPart, name, 2)
+			if sizeNewPart <= mbr.Partitions[1].Start-newPart.Start {
+				mbr.Partitions[2] = mbr.Partitions[1]
+				mbr.Partitions[1] = newPart
+				//Reordeno correlativo
+				mbr.Partitions[2].Correlative = 3
+			} else {
+				//despues de 2
+				newPart.SetInfo(typee, fit, mbr.Partitions[1].GetEnd(), sizeNewPart, name, 3)
+				if mbr.Partitions[3].Size == 0 {
+					if sizeNewPart <= mbr.MbrSize-newPart.Start {
+						mbr.Partitions[2] = newPart
+					} else {
+						newPart = noPart
+						fmt.Println("FDISK Error. Espacio insuficiente")
+					}
+				} else {
+					//4 existe
+					//entre 2 y 4
+					if sizeNewPart <= mbr.Partitions[3].Start-newPart.Start {
+						mbr.Partitions[2] = newPart
+					} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[3].GetEnd() {
+						//despues de 4
+						newPart.SetInfo(typee, fit, mbr.Partitions[3].GetEnd(), sizeNewPart, name, 4)
+						mbr.Partitions[2] = mbr.Partitions[3]
+						mbr.Partitions[3] = newPart
+						//Reordeno correlativo
+						mbr.Partitions[2].Correlative = 3
+					} else {
+						newPart = noPart
+						fmt.Println("FDISK Error. Espacio insuficiente")
+					}
+				} //Fin de 4 existe o no existe
+			} //Fin espacio entre 1 y 2 o despues de 2
+		} //Fin espacio antes de 1
+		//Fin particion 3
+
+		//PARTICION 4
+	} else if mbr.Partitions[3].Size == 0 {
+		//antes de 1
+		newPart.SetInfo(typee, fit, sizeMBR, sizeNewPart, name, 1)
+		if sizeNewPart <= mbr.Partitions[0].Start-newPart.Start {
+			mbr.Partitions[3] = mbr.Partitions[2]
+			mbr.Partitions[2] = mbr.Partitions[1]
+			mbr.Partitions[1] = mbr.Partitions[0]
+			mbr.Partitions[0] = newPart
+			//Reordeno los correlativos
+			mbr.Partitions[3].Correlative = 4
+			mbr.Partitions[2].Correlative = 3
+			mbr.Partitions[1].Correlative = 2
+		} else {
+			//si no cabe antes de 1
+			//entre 1 y 2
+			newPart.SetInfo(typee, fit, mbr.Partitions[0].GetEnd(), sizeNewPart, name, 2)
+			if sizeNewPart <= mbr.Partitions[1].Start-newPart.Start {
+				mbr.Partitions[3] = mbr.Partitions[2]
+				mbr.Partitions[2] = mbr.Partitions[1]
+				mbr.Partitions[1] = newPart
+				//Reordeno correlativos
+				mbr.Partitions[3].Correlative = 4
+				mbr.Partitions[2].Correlative = 3
+			} else if sizeNewPart <= mbr.Partitions[2].Start-mbr.Partitions[1].GetEnd() {
+				//entre 2 y 3
+				newPart.SetInfo(typee, fit, mbr.Partitions[1].GetEnd(), sizeNewPart, name, 3)
+				mbr.Partitions[3] = mbr.Partitions[2]
+				mbr.Partitions[2] = newPart
+				//Reordeno correlativo
+				mbr.Partitions[3].Correlative = 4
+			} else if sizeNewPart <= mbr.MbrSize-mbr.Partitions[2].GetEnd() {
+				//despues de 3
+				newPart.SetInfo(typee, fit, mbr.Partitions[2].GetEnd(), sizeNewPart, name, 4)
+				mbr.Partitions[3] = newPart
+			} else {
+				newPart = noPart
+				fmt.Println("FDISK Error. Espacio insuficiente")
+			}
+		} //Fin antes y despues de 1
+		//Fin particion 4
+	} else {
+		newPart = noPart
+		fmt.Println("FDISK Error. Particiones primarias y/o extendidas ya no disponibles")
+	}
+
+	return mbr, newPart
+}

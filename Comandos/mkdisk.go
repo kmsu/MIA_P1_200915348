@@ -37,7 +37,7 @@ func Mkdisk(parametros []string) {
 		//Debería pasar todos strings.ToLower(tmp[0]) ---------------------------------------------------------------------
 		//en tmp valido que parametro viene en su primera posicion y que tenga un valor
 		//SIZE
-		if strings.ToLower(tmp[0]) == "-size" {
+		if strings.ToLower(tmp[0]) == "size" {
 			sizeInit = true
 			var err error
 			size, err = strconv.Atoi(tmp[1]) //se convierte el valor en un entero
@@ -52,7 +52,7 @@ func Mkdisk(parametros []string) {
 				break
 			}
 			//FIT
-		} else if strings.ToLower(tmp[0]) == "-fit" {
+		} else if strings.ToLower(tmp[0]) == "fit" {
 			//Si el ajuste es BF (best fit)
 			if strings.ToLower(tmp[1]) == "bf" {
 				//asigno el valor del parametro en su respectiva variable
@@ -68,7 +68,7 @@ func Mkdisk(parametros []string) {
 				break
 			}
 			//UNIT
-		} else if strings.ToLower(tmp[0]) == "-unit" {
+		} else if strings.ToLower(tmp[0]) == "unit" {
 			//si la unidad es k
 			if strings.ToLower(tmp[1]) == "k" {
 				//asigno el valor del parametro en su respectiva variable
@@ -92,6 +92,7 @@ func Mkdisk(parametros []string) {
 		if sizeInit {
 			tam := size * unit
 			var path string
+			var disco string
 			carpeta := "./MIA/P1/" //Ruta (carpeta donde se guardara el disco)
 			extension := ".dsk"
 			//_, err := os.Stat(filepath.Join(carpeta, nombreNuevo)) usando un join si generara una lista de los a archivos de la carpeta
@@ -101,14 +102,15 @@ func Mkdisk(parametros []string) {
 				// Verificar si el archivo con el nombre nuevo ya existe
 				_, err := os.Stat(path)
 				if os.IsNotExist(err) {
-					// El archivo no existe, puedes hacer algo con el nombreArchivo aquí
-					break // Terminar el bucle porque encontramos un nombre único
+					// Terminar el bucle porque encontramos un nombre único
+					disco = string(letra) + extension
+					break
 				}
 			}
 
 			//Debería haber un if por si se acaban las letras pero no sera necesario en este proyecto
 			// Create file
-			fmt.Println("Archivo ", path)
+			//fmt.Println("Archivo ", path)
 			err := Herramientas.CrearDisco(path)
 			if err != nil {
 				fmt.Println("MKDISK Error:: ", err)
@@ -147,7 +149,7 @@ func Mkdisk(parametros []string) {
 			if err != nil {
 				fmt.Println("MKDISK Error: no converti fecha en entero para id")
 			}
-
+			//fmt.Println("id guardado actual ", idTmp)
 			// Create a new instance of MBR
 			var newMBR Structs.MBR
 			newMBR.MbrSize = int32(tam)
@@ -159,18 +161,19 @@ func Mkdisk(parametros []string) {
 				return
 			}
 
-			var TempMBR Structs.MBR
-			// Read object from bin file
-			if err := Herramientas.ReadObject(file, &TempMBR, 0); err != nil {
-				return
-			}
-			// Print object
-			Structs.PrintMBR(TempMBR)
-
 			// Close bin file
 			defer file.Close()
 
-			fmt.Println("======End MKDISK======")
+			fmt.Println("\n Se creo el disco ", disco, " de forma exitosa")
+
+			//imprimir el disco creado para validar que todo este correcto
+			var TempMBR Structs.MBR
+			if err := Herramientas.ReadObject(file, &TempMBR, 0); err != nil {
+				return
+			}
+			Structs.PrintMBR(TempMBR)
+
+			fmt.Println("\n======End MKDISK======")
 		} else {
 			fmt.Println("MKDISK Error: Falta parametro -size")
 		}
