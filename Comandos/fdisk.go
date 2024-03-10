@@ -375,8 +375,8 @@ func Fdisk(parametros []string) {
 						}
 					} else {
 						//Verificar si fueran las logicas
-						fmt.Println("reducir logicas")
-						//si despues de intentar reducir las logicas no encontro nada, reportar el error que no existe la particion
+						fmt.Println("aumentar logicas")
+						//si despues de intentar aumentar las logicas no encontro nada, reportar el error que no existe la particion
 					}
 				} else {
 					fmt.Println("FDISK Error. 0 no es un valor valido para aumentar o disminuir particiones")

@@ -37,7 +37,7 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_size </td> 
-  <td bgcolor='Azure'> 80 </td> 
+  <td bgcolor='Azure'> 100 </td> 
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_name </td> 
@@ -47,7 +47,7 @@ TablaReportNodo [ label = < <table border="1">
   <td bgcolor='Azure'> part_id </td> 
   <td bgcolor='Azure'> - </td> 
  </tr> 
-<tr> <td bgcolor='#808080' COLSPAN="2"> ESPACIO LIBRE <br/> 20 bytes </td> </tr>  <tr>
+ <tr>
   <td bgcolor='DeepSkyBlue' COLSPAN="2"> PARTICION </td> 
  </tr> 
  <tr>
@@ -68,7 +68,7 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_size </td> 
-  <td bgcolor='Azure'> 70 </td> 
+  <td bgcolor='Azure'> 150 </td> 
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_name </td> 
@@ -78,7 +78,7 @@ TablaReportNodo [ label = < <table border="1">
   <td bgcolor='Azure'> part_id </td> 
   <td bgcolor='Azure'> - </td> 
  </tr> 
-<tr> <td bgcolor='#808080' COLSPAN="2"> ESPACIO LIBRE <br/> 30 bytes </td> </tr>  <tr>
+ <tr>
   <td bgcolor='DeepSkyBlue' COLSPAN="2"> PARTICION </td> 
  </tr> 
  <tr>
@@ -95,11 +95,11 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_start</td> 
-  <td bgcolor='LightSkyBlue'> 375 </td> 
+  <td bgcolor='LightSkyBlue'> 425 </td> 
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_size </td> 
-  <td bgcolor='Azure'> 170 </td> 
+  <td bgcolor='Azure'> 200 </td> 
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_name </td> 
@@ -109,7 +109,7 @@ TablaReportNodo [ label = < <table border="1">
   <td bgcolor='Azure'> part_id </td> 
   <td bgcolor='Azure'> - </td> 
  </tr> 
-<tr> <td bgcolor='#808080' COLSPAN="2"> ESPACIO LIBRE <br/> 80 bytes </td> </tr>  <tr>
+ <tr>
   <td bgcolor='DeepSkyBlue' COLSPAN="2"> PARTICION </td> 
  </tr> 
  <tr>
@@ -130,7 +130,7 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_size </td> 
-  <td bgcolor='Azure'> 300 </td> 
+  <td bgcolor='Azure'> 39 </td> 
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_name </td> 
@@ -140,5 +140,5 @@ TablaReportNodo [ label = < <table border="1">
   <td bgcolor='Azure'> part_id </td> 
   <td bgcolor='Azure'> - </td> 
  </tr> 
-<tr> <td bgcolor='#808080' COLSPAN="2"> ESPACIO LIBRE <br/> 99 bytes </td> </tr> </table> > ]
+<tr> <td bgcolor='#808080' COLSPAN="2"> ESPACIO LIBRE <br/> 360 bytes </td> </tr> </table> > ]
 }
