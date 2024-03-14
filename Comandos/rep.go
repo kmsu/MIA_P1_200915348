@@ -111,11 +111,11 @@ func mbr(path string, id string) {
 	//reporte graphviz (cad es el contenido del reporte)
 	//mbr
 	cad := "digraph { \nnode [ shape=none ] \nTablaReportNodo [ label = < <table border=\"1\"> \n"
-	cad += " <tr>\n  <td bgcolor= 'SlateBlue' COLSPAN=\"2\"> Reporte MBR </td> \n </tr> \n"
+	cad += " <tr>\n  <td bgcolor='SlateBlue' COLSPAN=\"2\"> Reporte MBR </td> \n </tr> \n"
 	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_tamano </td> \n  <td bgcolor='Azure'> %d </td> \n </tr> \n", TempMBR.MbrSize)
 	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='#AFA1D1'> mbr_fecha_creacion </td> \n  <td bgcolor='#AFA1D1'> %s </td> \n </tr> \n", string(TempMBR.FechaC[:]))
 	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_disk_signature </td> \n  <td bgcolor='Azure'> %d </td> \n </tr>  \n", TempMBR.Id)
-	cad += Structs.RepGraphviz(TempMBR)
+	cad += Structs.RepGraphviz(TempMBR, file)
 	cad += "</table> > ]\n}"
 
 	//reporte requerido
@@ -156,7 +156,7 @@ func disk(path string, id string) {
 	//inicia contenido del reporte graphviz del disco
 	cad := "digraph { \nnode [ shape=none ] \nTablaReportNodo [ label = < <table border=\"1\"> \n<tr> \n"
 	cad += " <td bgcolor='SlateBlue'  ROWSPAN='3'> MBR </td>\n"
-	cad += Structs.RepDiskGraphviz(TempMBR)
+	cad += Structs.RepDiskGraphviz(TempMBR, file)
 	cad += "\n</table> > ]\n}"
 
 	//reporte requerido

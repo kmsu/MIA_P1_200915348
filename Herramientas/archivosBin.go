@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 // En Go cuando manejo en paquetes la funcion debe iniciar con mayuscula para poder ser exportada
@@ -44,7 +45,7 @@ func OpenFile(name string) (*os.File, error) {
 
 // Function to Write an object in a bin file
 func WriteObject(file *os.File, data interface{}, position int64) error {
-	file.Seek(position, 0)
+	file.Seek(position, 0) //(posicion, desde donde) -> (5,0) significa a la posicion 5 desde el inicio del archivo
 	err := binary.Write(file, binary.LittleEndian, data)
 	if err != nil {
 		fmt.Println("Err WriteObject==", err)
@@ -94,4 +95,16 @@ func RepGraphizMBR(path string, contenido string, nombre string) error {
 	}
 
 	return err
+}
+
+// para eliminar en el archivo una particion logica
+func DelPartL(size int32) []byte {
+	datos := make([]byte, size)
+	return datos
+}
+
+// probar la escritura de la particion logica
+func EscribirPartL(size int32) string {
+	cad := strings.Repeat("L", int(size))
+	return cad
 }

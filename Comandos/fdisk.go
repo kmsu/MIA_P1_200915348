@@ -185,33 +185,80 @@ func Fdisk(parametros []string) {
 			if opcion == 0 {
 
 				//Si la particion es tipo extendida validar que no exista alguna extendida
-				isPartExtend := true //Indica si aun esta disponible la particion extendida
+				isPartExtend := false //Indica si se puede usar la particion extendida
+				isName := true        //Valida si el nombre no se repite (true no se repite)
 				if typee == "E" {
 					for i := 0; i < 4; i++ {
 						tipo := string(mbr.Partitions[i].Type[:])
-						if tipo == "E" {
+						//fmt.Println("tipo ", tipo)
+						if tipo != "E" {
+							isPartExtend = true
+						} else {
 							isPartExtend = false
+							isName = false //Para que ya no evalue el nombre ni intente hacer nada mas
 							fmt.Println("FDISK Error. Ya existe una particion extendida")
+							fmt.Println("FDISK Error. No se puede crear la nueva particion con nombre: ", name)
 							break
 						}
 					}
 				}
 
 				//verificar si  el nombre existe en las particiones primarias o extendida
-				isName := true //Valida si el nombre no se repite (true no se repite)
-				for i := 0; i < 4; i++ {
-					nombre := Structs.GetName(string(mbr.Partitions[i].Name[:]))
-					if nombre == name {
-						isName = false
-						fmt.Println("FDISK Error. Ya existe la particion : ", name)
-						break
+				if isName {
+					for i := 0; i < 4; i++ {
+						nombre := Structs.GetName(string(mbr.Partitions[i].Name[:]))
+						if nombre == name {
+							isName = false
+							fmt.Println("FDISK Error. Ya existe la particion : ", name)
+							fmt.Println("FDISK Error. No se puede crear la nueva particion con nombre: ", name)
+							break
+						}
 					}
 				}
 
 				if isName {
-					//validar que tampoco exista en las logicas
-					//fmt.Println("Verificar que no exista una logica con el nombre que se quiere agregar")
-					fmt.Println("")
+					//Buscar en las logicas si ya existe
+					var partExtendida Structs.Partition
+					//buscar en que particion esta la particion extendida y guardarla en partExtend
+					if string(mbr.Partitions[0].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[0]
+					} else if string(mbr.Partitions[1].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[1]
+					} else if string(mbr.Partitions[2].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[2]
+					} else if string(mbr.Partitions[3].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[3]
+					}
+					//Si existe la extendida
+					if partExtendida.Size != 0 {
+						var actual Structs.EBR
+						if err := Herramientas.ReadObject(disco, &actual, int64(partExtendida.Start)); err != nil {
+							return
+						}
+
+						//Evaluo la primer ebr
+						if Structs.GetName(string(actual.Name[:])) == name {
+							isName = false
+						} else {
+							for actual.Next != -1 {
+								//actual = actual.next
+								if err := Herramientas.ReadObject(disco, &actual, int64(actual.Next)); err != nil {
+									return
+								}
+								if Structs.GetName(string(actual.Name[:])) == name {
+									isName = false
+									break
+								}
+							}
+						}
+
+						if !isName {
+							fmt.Println("FDISK Error. Ya existe la particion : ", name)
+							fmt.Println("FDISK Error. No se puede crear la nueva particion con nombre: ", name)
+							return
+						}
+					}
+
 				}
 
 				//INGRESO DE PARTICIONES PRIMARIAS Y/O EXTENDIDA (SIN LOGICAS)
@@ -234,6 +281,15 @@ func Fdisk(parametros []string) {
 							return
 						}
 
+						//Se agrega el ebr de la particion extendida en el disco
+						if isPartExtend {
+							var ebr Structs.EBR
+							ebr.Start = newPart.Start
+							ebr.Next = -1
+							if err := Herramientas.WriteObject(disco, ebr, int64(ebr.Start)); err != nil {
+								return
+							}
+						}
 						//para verificar que lo guardo
 						var TempMBR2 Structs.MBR
 						// Read object from bin file
@@ -249,8 +305,25 @@ func Fdisk(parametros []string) {
 
 					// INGRESO DE PARTICIONES LOGICAS
 				} else if typee == "L" && isName {
-					fmt.Println("Crear particion logica")
-					//validar que el nombre no exista en la logicas si el tipo es "L"
+					var partExtend Structs.Partition
+					if string(mbr.Partitions[0].Type[:]) == "E" {
+						partExtend = mbr.Partitions[0]
+					} else if string(mbr.Partitions[1].Type[:]) == "E" {
+						partExtend = mbr.Partitions[1]
+					} else if string(mbr.Partitions[2].Type[:]) == "E" {
+						partExtend = mbr.Partitions[2]
+					} else if string(mbr.Partitions[3].Type[:]) == "E" {
+						partExtend = mbr.Partitions[3]
+					} else {
+						fmt.Println("FDISK Error. No existe una particion extendida en la cual crear un particion logica")
+					}
+
+					//valido que la particion extendida si exista (podría haber entrado al error que no existe extendida)
+					if partExtend.Size != 0 {
+						//si tuviera los demas ajustes con un if del fit y uso el metodo segun ajuste
+						primerAjusteLogicas(disco, partExtend, int32(sizeNewPart), name, fit) //int32(sizeNewPart) es para castear el int a int32 que es el tipo que tiene el atributo en el struct Partition
+						repLogicas(partExtend, disco)
+					}
 				}
 				//a esta altura sigue abierto el archivo
 
@@ -282,8 +355,52 @@ func Fdisk(parametros []string) {
 
 					//particiones logicas
 					if reducir {
-						//Reducir logica, si se reduce alguna logica cambiar reducir a false
-						fmt.Println("Reducir logicas")
+						var partExtendida Structs.Partition
+						//buscar en que particion esta la particion extendida y guardarla en partExtend
+						if string(mbr.Partitions[0].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[0]
+						} else if string(mbr.Partitions[1].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[1]
+						} else if string(mbr.Partitions[2].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[2]
+						} else if string(mbr.Partitions[3].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[3]
+						}
+						//Si existe la extendida
+						if partExtendida.Size != 0 {
+							var actual Structs.EBR
+							if err := Herramientas.ReadObject(disco, &actual, int64(partExtendida.Start)); err != nil {
+								return
+							}
+
+							//Evaluar si es la primera
+							if Structs.GetName(string(actual.Name[:])) == name {
+								reducir = false
+							} else {
+								for actual.Next != -1 {
+									//actual = actual.next
+									if err := Herramientas.ReadObject(disco, &actual, int64(actual.Next)); err != nil {
+										return
+									}
+									if Structs.GetName(string(actual.Name[:])) == name {
+										reducir = false
+										break
+									}
+								}
+							}
+
+							if !reducir {
+								actual.Size += int32(add)
+								if actual.Size > 0 {
+									if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil { //Sobre escribir el ebr
+										return
+									}
+									fmt.Println("Particion con nombre ", name, " se redujo correctamente")
+								} else {
+									fmt.Println("FDISK Error. El tamaño que intenta eliminar es demasiado grande")
+								}
+							}
+						}
 					}
 
 					if reducir {
@@ -374,10 +491,71 @@ func Fdisk(parametros []string) {
 							fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
 						}
 					} else {
-						//Verificar si fueran las logicas
-						fmt.Println("aumentar logicas")
-						//si despues de intentar aumentar las logicas no encontro nada, reportar el error que no existe la particion
-					}
+						//Aumentar logica
+						var partExtendida Structs.Partition
+						//buscar en que particion esta la particion extendida y guardarla en partExtend
+						if string(mbr.Partitions[0].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[0]
+						} else if string(mbr.Partitions[1].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[1]
+						} else if string(mbr.Partitions[2].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[2]
+						} else if string(mbr.Partitions[3].Type[:]) == "E" {
+							partExtendida = mbr.Partitions[3]
+						}
+						//Si existe la extendida
+						if partExtendida.Size != 0 {
+							aumentar := false
+							var actual Structs.EBR
+							if err := Herramientas.ReadObject(disco, &actual, int64(partExtendida.Start)); err != nil {
+								return
+							}
+
+							//Reviso si es la primera
+							if Structs.GetName(string(actual.Name[:])) == name {
+								aumentar = true
+							} else {
+								for actual.Next != -1 {
+									//actual = actual.next
+									if err := Herramientas.ReadObject(disco, &actual, int64(actual.Next)); err != nil {
+										return
+									}
+									if Structs.GetName(string(actual.Name[:])) == name {
+										aumentar = true
+										break
+									}
+								}
+							}
+
+							if aumentar {
+								if actual.Next != -1 {
+									if add <= int(actual.Next)-int(actual.GetEnd()) {
+										actual.Size += int32(add)
+										if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil { //Sobre escribir el ebr
+											return
+										}
+										fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+									} else {
+										fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+									}
+								} else {
+									if add <= int(partExtendida.GetEnd())-int(actual.GetEnd()) {
+										actual.Size += int32(add)
+										if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil { //Sobre escribir el ebr
+											return
+										}
+										fmt.Println("Particion con nombre ", name, " aumento el espacio correctamente")
+									} else {
+										fmt.Println("FDISK Error. El tamaño que intenta aumentar es demasiado grande para la particion ", name)
+									}
+								}
+							} else {
+								fmt.Println("FDISK Error. No existe la particion a aumentar")
+							}
+						} else {
+							fmt.Println("FDISK Error. No existe particion extendida")
+						}
+					} //Fin evaluar si existe la particion a la que se le quiere aumentar el tamaño
 				} else {
 					fmt.Println("FDISK Error. 0 no es un valor valido para aumentar o disminuir particiones")
 				}
@@ -403,9 +581,113 @@ func Fdisk(parametros []string) {
 
 				//Eliminar logicas
 				if del {
-					//si elimina una logica cambia a false
-					fmt.Println("Eliminar logicas")
-				}
+					var partExtendida Structs.Partition
+					//buscar en que particion esta la particion extendida y guardarla en partExtend
+					if string(mbr.Partitions[0].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[0]
+					} else if string(mbr.Partitions[1].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[1]
+					} else if string(mbr.Partitions[2].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[2]
+					} else if string(mbr.Partitions[3].Type[:]) == "E" {
+						partExtendida = mbr.Partitions[3]
+					}
+					//Si existe la extendida
+					if partExtendida.Size != 0 {
+						var actual Structs.EBR
+						if err := Herramientas.ReadObject(disco, &actual, int64(partExtendida.Start)); err != nil {
+							return
+						}
+						var anterior Structs.EBR
+						var eliminar Structs.EBR //para eliminar el nombre de la primera particion con el valor de un EBR sin valores
+
+						//Evaluar la primer EBR
+						if Structs.GetName(string(actual.Name[:])) == name {
+							fmt.Println("Entre en la primer ebr")
+							fmt.Println("Nombre primer ebr ", Structs.GetName(string(actual.Name[:])))
+							del = false
+						} else {
+							for actual.Next != -1 {
+								//anterior = actual
+								if err := Herramientas.ReadObject(disco, &anterior, int64(actual.Start)); err != nil {
+									return
+								}
+								//actual = actual.next
+								if err := Herramientas.ReadObject(disco, &actual, int64(actual.Next)); err != nil {
+									return
+								}
+								//evalua la actual
+								if Structs.GetName(string(actual.Name[:])) == name {
+									del = false
+									break
+								}
+							}
+						}
+
+						//Eliminar la particion encontrada (si se encontro)
+						if !del {
+							//Cargar el tamaño de la estructura del ebr para eliminar el ebr junto al contenido de la particion (la particion ocupa el ebr + tamaño de la particion)
+							sizeEBR := int32(binary.Size(actual))
+							//si tiene una particion siguiente
+							if actual.Next != -1 {
+								if anterior.Size == 0 {
+									//Si la anterior no existe estoy en la primera
+									actual.Size = 0             //con size = 0 indico que no existe, los demas valores los dejo para conservar las que vienen despues
+									actual.Name = eliminar.Name // para que cuando elimine tampoco encuentre este nombre (elimine bien)
+									fmt.Println("Nombre cambiado ", Structs.GetName(string(actual.Name[:])))
+									if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+										return
+									}
+									//Al ser la primera particion debo dejar el ebr escrito en el archivo del disco
+									//Eliminar el contenido de la particion
+									if err := Herramientas.WriteObject(disco, Herramientas.DelPartL(actual.Size), int64(actual.Start+sizeEBR)); err != nil {
+										return
+									}
+									fmt.Println("particion con nombre ", name, " eliminada")
+								} else {
+									//En medio (Esta despues de la primera pero antes de la ultima. Tiene anterior y siguiente)
+									//Guardo en el disco (el anterior al que voy a eliminar ahora apunta al siguiente del que voy a eliminar)
+									anterior.Next = actual.Next
+									if err := Herramientas.WriteObject(disco, anterior, int64(anterior.Start)); err != nil {
+										return
+									}
+									//Eliminar el contenido de la particion
+									if err := Herramientas.WriteObject(disco, Herramientas.DelPartL(actual.Size+sizeEBR), int64(actual.Start)); err != nil {
+										return
+									}
+									fmt.Println("particion con nombre ", name, " eliminada")
+								}
+							} else {
+								//No tiene siguiente
+								if anterior.Size == 0 {
+									//Es la primera porque no tiene anterior. Ademas si esta en este bloque es porque no tiene siguiente tampoco
+									actual.Size = 0
+									actual.Name = eliminar.Name
+									fmt.Println("Nombre cambiado ", Structs.GetName(string(actual.Name[:])))
+									if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+										return
+									}
+									//Al ser la primera no debo eliminar el ebr del disco
+									fmt.Println("particion con nombre ", name, " eliminada")
+								} else {
+									//Ultima particion (No tiene un siguiente pero si un anterior) (actual es la que se esta eliminando)
+									anterior.Next = -1
+									if err := Herramientas.WriteObject(disco, anterior, int64(anterior.Start)); err != nil {
+										return
+									}
+
+									//Eliminar el contenido de la particion
+									if err := Herramientas.WriteObject(disco, Herramientas.DelPartL(actual.Size+sizeEBR), int64(actual.Start)); err != nil {
+										return
+									}
+									fmt.Println("particion con nombre ", name, " eliminada")
+								}
+							}
+						}
+					} else {
+						fmt.Println("FDISK Error. No se encuentra la particion de tipo logica debido a que no existe una particion extendida: ", name)
+					}
+				} //fin eliminar logicas
 
 				//Valido si no se elimino nada para reportar el error
 				if del {
@@ -416,6 +698,7 @@ func Fdisk(parametros []string) {
 				//Creo se puede quitar porque nunca va a entrar aqui
 				fmt.Println("FDISK Error. Operación desconocida (operaciones aceptadas: crear, modificar o eliminar)")
 			}
+			//Fin operaciones crear, modificar (add) y eliminar
 
 			// Cierro el disco
 			defer disco.Close()
@@ -769,4 +1052,132 @@ func primerAjuste(mbr Structs.MBR, typee string, sizeMBR int32, sizeNewPart int3
 	}
 
 	return mbr, newPart
+}
+
+func primerAjusteLogicas(disco *os.File, partExtend Structs.Partition, sizeNewPart int32, name string, fit string) {
+	//Se crea un ebr para cargar el ebr desde el disco y la particion extendida
+	save := true //false indica que guardo en el primer ebr, true significa que debe seguir buscando
+	var actual Structs.EBR
+	sizeEBR := int32(binary.Size(actual)) //obtener el tamaño del ebr (el que ocupa fisicamente: 31)
+	//fmt.Println("Tamaño fisico del ebr ", sizeEBR)
+
+	//Guardo el ebr leido
+	if err := Herramientas.ReadObject(disco, &actual, int64(partExtend.Start)); err != nil {
+		return
+	}
+
+	//NOTA: debe caber la particion con el tamaño establecido MAS su EBR
+	//NOTA2: Recordar que a la hora de escribir (usar) la particion se inicia donde termina fisicamente la estructura del ebr
+	//ej: si el ebr ocupa 5 bytes y la particion es de 10 bytes. los primeros 5 son del ebr entonces uso de 5-15 para escribir en el archivo el contenido de la particion
+
+	//si el primer ebr esta vacio o no existe
+	if actual.Size == 0 {
+		if actual.Next == -1 {
+			//validar si el tamaño de la nueva particion junto al ebr es menor al tamaño de la particion extendida
+			if sizeNewPart+sizeEBR <= partExtend.Size {
+				actual.SetInfo(fit, partExtend.Start, sizeNewPart, name, -1)
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+				save = false //ya guardo la nueva particion
+				fmt.Println("Particion con nombre ", name, " creada correctamente")
+			} else {
+				fmt.Println("FDISK Error. Espacio insuficiente logicas")
+			}
+		} else {
+			//Para insertar si se elimino la primera particion (primer EBR)
+			//Si actual.Next no es -1 significa que hay otra particion despues de la actual y actual.next tiene el inicio de esa particion
+			disponible := actual.Next - partExtend.Start //del inicio hasta donde inicia la siguiente
+			if sizeNewPart+sizeEBR <= disponible {
+				actual.SetInfo(fit, partExtend.Start, sizeNewPart, name, actual.Next)
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+				save = false //ya guardo la nueva particion
+				fmt.Println("Particion con nombre ", name, " creada correctamente")
+			} else {
+				fmt.Println("FDISK Error. Espacio insuficiente logicas 2")
+			}
+		}
+		//Si esta despues del primer ebr
+	}
+
+	if save {
+		//siguiente = actual.next //el valor del siguiente es el inicio de la siguiente particion
+		for actual.Next != -1 {
+			//si el ebr y la particion caben
+			if sizeNewPart+sizeEBR <= actual.Next-actual.GetEnd() {
+				break
+			}
+			//paso al siguiente ebr (simula un actual = actual.next)
+			if err := Herramientas.ReadObject(disco, &actual, int64(actual.Next)); err != nil {
+				return
+			}
+
+		}
+
+		//Despues de la ultima particion
+		if actual.Next == -1 {
+			//ya no es el tamaño porque ya hay espacio ocupado por lo que tomo donde termina la extendida y se resta donde termina la ultima
+			if sizeNewPart+sizeEBR <= (partExtend.GetEnd() - actual.GetEnd()) {
+				//guardar cambios en el ebr actual (cambio el Next)
+				actual.Next = actual.GetEnd()
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+
+				//crea y guarda la nueva particion logica
+				newStart := actual.GetEnd()                          //la nueva ebr inicia donde termina la ultima ebr
+				actual.SetInfo(fit, newStart, sizeNewPart, name, -1) //cambia actual con los nuevos valores
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+				fmt.Println("Particion con nombre ", name, " creada correctamente")
+			} else {
+				fmt.Println("FDISK Error. Espacio insuficiente logicas 3")
+			}
+		} else {
+			//Entre dos particiones
+			if sizeNewPart+sizeEBR <= (actual.Next - actual.GetEnd()) {
+				siguiente := actual.Next //guardo el siguiente de la actual para ponerlo en el siguiente de la nueva particion
+				//guardar cambio de siguiente en la actual
+				actual.Next = actual.GetEnd()
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+
+				//agrego la nueva particion apuntando a la siguiente de la actual
+				newStart := actual.GetEnd()                                 //la nueva ebr inicia donde termina la ultima ebr
+				actual.SetInfo(fit, newStart, sizeNewPart, name, siguiente) //cambia actual con los nuevos valores
+				if err := Herramientas.WriteObject(disco, actual, int64(actual.Start)); err != nil {
+					return
+				}
+				fmt.Println("Particion con nombre ", name, " creada correctamente")
+			} else {
+				fmt.Println("FDISK Error. Espacio insuficiente logicas 4")
+			}
+		}
+	}
+}
+
+func repLogicas(partExtendida Structs.Partition, disco *os.File) {
+	fmt.Println("\nREPORTE PARTICIONES LOGICAS")
+	var TempEbr Structs.EBR
+	// Read object from bin file
+	if err := Herramientas.ReadObject(disco, &TempEbr, int64(partExtendida.Start)); err != nil {
+		return
+	}
+
+	if TempEbr.Size != 0 {
+		Structs.PrintEbr(TempEbr)
+	}
+	fmt.Println("")
+	for TempEbr.Next != -1 {
+		if err := Herramientas.ReadObject(disco, &TempEbr, int64(TempEbr.Next)); err != nil {
+			return
+		}
+		Structs.PrintEbr(TempEbr)
+		fmt.Println("")
+	}
+
 }

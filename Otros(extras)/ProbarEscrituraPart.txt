@@ -1,0 +1,52 @@
+En fdisk, en guardar despues de reescribir el mbr en el archivo copiar
+
+//probar las cadenas de particiones
+for i := 0; i < 4; i++ {
+    if mbr.Partitions[i].Size != 0 {
+        if i == 0 {
+
+            if err := Herramientas.WriteObject(disco, []byte(Herramientas.Part1(int32(sizeNewPart))), int64(mbr.Partitions[i].Start)); err != nil {
+                return
+            }
+        } else if i == 1 {
+            if err := Herramientas.WriteObject(disco, []byte(Herramientas.Part2(int32(sizeNewPart))), int64(mbr.Partitions[i].Start)); err != nil {
+                return
+            }
+        } else if i == 2 {
+            if err := Herramientas.WriteObject(disco, []byte(Herramientas.Part3(int32(sizeNewPart))), int64(mbr.Partitions[i].Start)); err != nil {
+                return
+            }
+        } else if i == 3 {
+            if err := Herramientas.WriteObject(disco, []byte(Herramientas.Part4(int32(sizeNewPart))), int64(mbr.Partitions[i].Start)); err != nil {
+                return
+            }
+        }
+
+    }
+}
+
+Para probar que escriba correctamente todas las particiones
+
+En archivosBin.go
+al final de todo copiar los siguientes metodos
+
+
+func Part1(size int32) string {
+	cad := strings.Repeat("1", int(size))
+	return cad
+}
+
+func Part2(size int32) string {
+	cad := strings.Repeat("2", int(size))
+	return cad
+}
+
+func Part3(size int32) string {
+	cad := strings.Repeat("3", int(size))
+	return cad
+}
+
+func Part4(size int32) string {
+	cad := strings.Repeat("4", int(size))
+	return cad
+}
