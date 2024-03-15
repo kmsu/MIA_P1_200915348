@@ -21,7 +21,7 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_status </td> 
-  <td bgcolor='Azure'> I </td> 
+  <td bgcolor='Azure'> A </td> 
  </tr> 
  <tr>
   <td bgcolor='LightSkyBlue'> part_type </td> 
@@ -45,7 +45,7 @@ TablaReportNodo [ label = < <table border="1">
  </tr> 
  <tr>
   <td bgcolor='Azure'> part_id </td> 
-  <td bgcolor='Azure'> - </td> 
+  <td bgcolor='Azure'> B148 </td> 
  </tr> 
  <tr>
   <td bgcolor='DeepSkyBlue' COLSPAN="2"> PARTICION </td> 

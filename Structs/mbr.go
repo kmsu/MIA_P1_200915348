@@ -41,15 +41,15 @@ func (p *Partition) SetInfo(newType string, fit string, newStart int32, newSize 
 // Metodos de Partition
 func GetName(nombre string) string {
 	posicionNulo := strings.IndexByte(nombre, 0)
-	nombre = nombre[:posicionNulo]
+	nombre = nombre[:posicionNulo] //guarda la cadena hasta donde encontro un byte nulo
 	return nombre
 }
 
 func GetId(nombre string) string {
 	var id string
 	posicionNulo := strings.IndexByte(nombre, 0)
-	nombre = nombre[:posicionNulo]
-	if nombre == "" {
+	//si no encontro bytes nulos retorna -1
+	if posicionNulo != -1 {
 		id = "-"
 	} else {
 		id = nombre

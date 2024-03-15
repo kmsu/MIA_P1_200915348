@@ -84,7 +84,7 @@ func Rep(parametros []string) {
 func mbr(path string, id string) {
 	disk := strings.ToUpper(id[0:1]) //tomar el nombre del disco con case insensitive
 	tmp := strings.Split(path, "/")
-	nombre := strings.Split(tmp[len(tmp)-1], ".")[0]
+	nombre := strings.Split(tmp[len(tmp)-1], ".")[0] //nombre que tendra el reporte
 
 	//abrir disco a reportar
 	carpeta := "./MIA/P1/" //Ruta (carpeta donde se leera el disco)

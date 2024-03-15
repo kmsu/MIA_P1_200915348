@@ -1,36 +1,6 @@
 #execute -path=prueba.txt
+#mount -driveletter=B -name=Particion5
+unmount -id=A0485
 
-#mkdisk -size=1 -unit=k -fit=wf
-
-#rmdisk -driveletter=B
-
-#Ingreso de particiones
-#fdisk -driveletter=B -unit=b -fit=ff -type=P -size=100 -name=Particion1
-#fdisk -driveletter=B -unit=b -fit=ff -type=P -size=200 -name=Particion2
-#fdisk -driveletter=B -unit=b -fit=ff -type=E -size=300 -name=Particion3
-fdisk -driveletter=B -unit=b -fit=ff -type=P -size=259 -name=Particion4
-#fdisk -driveletter=B -unit=b -fit=ff -type=P -size=39 -name=Particion5
-#fdisk -driveletter=B -unit=b -fit=ff -type=E -size=300 -name=Particion9
-
-#fdisk -driveletter=B -unit=b -fit=ff -type=L -size=5 -name=Particion5
-#fdisk -driveletter=B -unit=b -fit=ff -type=L -size=6 -name=Particion6
-#fdisk -driveletter=B -unit=b -fit=ff -type=L -size=6 -name=Particion7
-#fdisk -driveletter=B -unit=b -fit=ff -type=L -size=10 -name=Particion8
-#fdisk -driveletter=B -unit=b -fit=ff -type=L -size=118 -name=Particion9
-
-#Eliminar particiones para pruebas
-#fdisk -size=283 -type=P -unit=b -fit=bf -driveletter=B -name=Particion1 -delete=full
-#fdisk -driveletter=B -delete=full -name=Particion2
-#fdisk -driveletter=B -delete=full -name=Particion3
-#fdisk -driveletter=B -delete=full -name=Particion4
-#fdisk -driveletter=B -delete=full -name=Particion5
-#fdisk -driveletter=B -delete=full -name=Particion6
-#fdisk -driveletter=B -delete=full -name=Particion7
-#fdisk -driveletter=B -delete=full -name=Particion9
-
-#Reducir/aumentar
-#fdisk -add=4 -size=-5 -unit=b -driveletter=B -name=Particion7
-
-#Reporte
 rep -id=B118 -path=/MIA/Reportes/mbrB.jpg -name=mbr
-rep -id=B118 -path=/MIA/Reportes/diskB.jpg -name=disk
+#rep -id=B118 -path=/MIA/Reportes/diskB.jpg -name=disk

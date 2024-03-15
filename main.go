@@ -90,6 +90,22 @@ func analizar(entrada string) {
 			fmt.Println("FDISK ERROR: parametros no encontrados")
 		}
 
+	} else if strings.ToLower(parametros[0]) == "mount" {
+		//MOUNT
+		if len(parametros) > 1 {
+			Comandos.Mount(parametros)
+		} else {
+			fmt.Println("MOUNT ERROR: parametros no encontrados")
+		}
+
+	} else if strings.ToLower(parametros[0]) == "unmount" {
+		//UNMOUNT
+		if len(parametros) > 1 {
+			Comandos.Unount(parametros)
+		} else {
+			fmt.Println("UNMOUNT ERROR: parametros no encontrados")
+		}
+
 	} else if strings.ToLower(parametros[0]) == "rep" {
 		//REP
 		if len(parametros) > 1 {
