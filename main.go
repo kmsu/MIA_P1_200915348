@@ -124,6 +124,8 @@ func analizar(entrada string) {
 		fmt.Println("Salida exitosa")
 		os.Exit(0)
 
+	} else if strings.ToLower(parametros[0]) == "" {
+		//fmt.Println("")
 	} else {
 		fmt.Println("Comando no reconocible")
 	}

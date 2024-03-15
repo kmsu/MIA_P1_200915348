@@ -98,34 +98,45 @@ func mbr(path string, id string) {
 		return
 	}
 
-	var TempMBR Structs.MBR
+	var mbr Structs.MBR
 	// Read object from bin file
-	if err := Herramientas.ReadObject(file, &TempMBR, 0); err != nil {
+	if err := Herramientas.ReadObject(file, &mbr, 0); err != nil {
 		return
 	}
-
-	// Print object
-	//Structs.PrintMBR(TempMBR)
 
 	// Close bin file
 	defer file.Close()
 
-	//reporte graphviz (cad es el contenido del reporte)
-	//mbr
-	cad := "digraph { \nnode [ shape=none ] \nTablaReportNodo [ label = < <table border=\"1\"> \n"
-	cad += " <tr>\n  <td bgcolor='SlateBlue' COLSPAN=\"2\"> Reporte MBR </td> \n </tr> \n"
-	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_tamano </td> \n  <td bgcolor='Azure'> %d </td> \n </tr> \n", TempMBR.MbrSize)
-	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='#AFA1D1'> mbr_fecha_creacion </td> \n  <td bgcolor='#AFA1D1'> %s </td> \n </tr> \n", string(TempMBR.FechaC[:]))
-	cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_disk_signature </td> \n  <td bgcolor='Azure'> %d </td> \n </tr>  \n", TempMBR.Id)
-	cad += Structs.RepGraphviz(TempMBR, file)
-	cad += "</table> > ]\n}"
+	//Asegurar que el id exista
+	reportar := false
+	for i := 0; i < 4; i++ {
+		identificador := Structs.GetId(string(mbr.Partitions[i].Id[:]))
+		if identificador == id {
+			reportar = true
+			break //para que ya no siga recorriendo si ya encontro la particion independientemente si se pudo o no reducir
+		}
+	}
 
-	//reporte requerido
-	carpeta = filepath.Dir(path)
-	rutaReporte := "." + carpeta + "/" + nombre + ".dot"
+	//if true { //para probar los reporte hayan o no particiones montadas
+	if reportar {
+		//reporte graphviz (cad es el contenido del reporte)
+		//mbr
+		cad := "digraph { \nnode [ shape=none ] \nTablaReportNodo [ label = < <table border=\"1\"> \n"
+		cad += " <tr>\n  <td bgcolor='SlateBlue' COLSPAN=\"2\"> Reporte MBR </td> \n </tr> \n"
+		cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_tamano </td> \n  <td bgcolor='Azure'> %d </td> \n </tr> \n", mbr.MbrSize)
+		cad += fmt.Sprintf(" <tr>\n  <td bgcolor='#AFA1D1'> mbr_fecha_creacion </td> \n  <td bgcolor='#AFA1D1'> %s </td> \n </tr> \n", string(mbr.FechaC[:]))
+		cad += fmt.Sprintf(" <tr>\n  <td bgcolor='Azure'> mbr_disk_signature </td> \n  <td bgcolor='Azure'> %d </td> \n </tr>  \n", mbr.Id)
+		cad += Structs.RepGraphviz(mbr, file)
+		cad += "</table> > ]\n}"
 
-	Herramientas.RepGraphizMBR(rutaReporte, cad, nombre)
+		//reporte requerido
+		carpeta = filepath.Dir(path)
+		rutaReporte := "." + carpeta + "/" + nombre + ".dot"
 
+		Herramientas.RepGraphizMBR(rutaReporte, cad, nombre)
+	} else {
+		fmt.Println("REP Error: Id no existe")
+	}
 }
 
 func disk(path string, id string) {

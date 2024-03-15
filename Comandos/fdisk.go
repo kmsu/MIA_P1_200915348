@@ -324,7 +324,7 @@ func Fdisk(parametros []string) {
 					if partExtend.Size != 0 {
 						//si tuviera los demas ajustes con un if del fit y uso el metodo segun ajuste
 						primerAjusteLogicas(disco, partExtend, int32(sizeNewPart), name, fit) //int32(sizeNewPart) es para castear el int a int32 que es el tipo que tiene el atributo en el struct Partition
-						repLogicas(partExtend, disco)
+						//repLogicas(partExtend, disco)
 					}
 				}
 				//a esta altura sigue abierto el archivo
@@ -1162,6 +1162,7 @@ func primerAjusteLogicas(disco *os.File, partExtend Structs.Partition, sizeNewPa
 	}
 }
 
+/*
 func repLogicas(partExtendida Structs.Partition, disco *os.File) {
 	fmt.Println("\nREPORTE PARTICIONES LOGICAS")
 	var TempEbr Structs.EBR
@@ -1183,3 +1184,4 @@ func repLogicas(partExtendida Structs.Partition, disco *os.File) {
 	}
 
 }
+*/
