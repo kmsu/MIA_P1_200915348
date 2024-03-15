@@ -1,6 +1,6 @@
-#execute -path=prueba.txt
+#execute -path=archivosEntradaPrueba/prueba.txt
 #mount -driveletter=B -name=Particion5
 unmount -id=A0485
 
-rep -id=B118 -path=/MIA/Reportes/mbrB.jpg -name=mbr
+#rep -id=B118 -path=/MIA/Reportes/mbrB.jpg -name=mbr
 #rep -id=B118 -path=/MIA/Reportes/diskB.jpg -name=disk

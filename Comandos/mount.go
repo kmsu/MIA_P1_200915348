@@ -17,7 +17,9 @@ func Mount(parametros []string) {
 	paramC := true //Para validar que los parametros cumplen con los requisitos
 
 	for _, parametro := range parametros[1:] {
-		tmp := strings.Split(parametro, "=")
+		//quito los espacios en blano despues de cada parametro
+		tmp2 := strings.TrimRight(parametro, " ")
+		tmp := strings.Split(tmp2, "=")
 
 		//Si falta el valor del parametro actual lo reconoce como error e interrumpe el proceso
 		if len(tmp) != 2 {

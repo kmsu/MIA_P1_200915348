@@ -8,7 +8,9 @@ import (
 
 func Rmdisk(parametros []string) {
 	fmt.Println("RMDISK")
-	tmp := strings.Split(parametros[1], "=")
+	//quito los espacios en blano despues de cada parametro
+	tmp2 := strings.TrimRight(parametros[1], " ")
+	tmp := strings.Split(tmp2, "=")
 
 	if len(tmp) != 2 {
 		fmt.Println("FDISK Error: Valor desconocido del parametro ", tmp[0])

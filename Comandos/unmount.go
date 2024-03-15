@@ -13,7 +13,9 @@ func Unount(parametros []string) {
 	var id string  //obligatorio
 	paramC := true //Para validar que los parametros cumplen con los requisitos
 
-	tmp := strings.Split(parametros[1], "=")
+	//quito los espacios en blano despues de cada parametro
+	tmp2 := strings.TrimRight(parametros[1], " ")
+	tmp := strings.Split(tmp2, "=")
 
 	//Si falta el valor del parametro actual lo reconoce como error e interrumpe el proceso
 	if len(tmp) != 2 {

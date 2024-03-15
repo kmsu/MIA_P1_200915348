@@ -18,14 +18,16 @@ func main() {
 	for {
 		fmt.Print("\n$: ")
 		reader.Scan()
+
 		//entrada := strings.TrimRightFunc(reader.Text(), func(r rune) bool { return r == ' ' })
 		entrada := strings.TrimRight(reader.Text(), " ")
+		linea := strings.Split(entrada, "#") //para ignorar comentarios desde la consola manual
 		//entrada := execute -path=script.txt
-		if strings.ToLower(entrada) != "exit" {
+		if strings.ToLower(linea[0]) != "exit" {
 			//fmt.Println("execute -path=script.txt")
 			//entrada = "execute -path=script.txt"
 			//analizar(strings.ToLower(entrada)) //--------------------OJO REVISAR SI EL TOLOWER NO AFECTA SI SE HACE DESDE AQUI
-			analizar(entrada) //--------------------OJO REVISAR SI EL TOLOWER NO AFECTA SI SE HACE DESDE AQUI
+			analizar(linea[0]) //--------------------OJO REVISAR SI EL TOLOWER NO AFECTA SI SE HACE DESDE AQUI
 		} else {
 			fmt.Println("Salida exitosa")
 			break

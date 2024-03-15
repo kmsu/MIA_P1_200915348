@@ -1,6 +1,6 @@
 #execute -path=prueba.txt
 
-#mkdisk -size=1 -unit=k -fit=wf
+#mkdisk -size=1               -unit=k                        -fit=FF                             #prueba comentario
 
 #rmdisk -driveletter=B
 

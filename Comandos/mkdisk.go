@@ -24,8 +24,10 @@ func Mkdisk(parametros []string) {
 	//esto porque en [0] esta el comando mkdisk que estamos ejecutando
 	//recorro parametros del mkdisk asignando sus valores segun sea el caso
 	for _, parametro := range parametros[1:] {
+		//quito los espacios en blano despues de cada parametro
+		tmp2 := strings.TrimRight(parametro, " ")
 		//divido cada parametro entre nombre del parametro y su valor # -size=25 -> -size, 25
-		tmp := strings.Split(parametro, "=")
+		tmp := strings.Split(tmp2, "=")
 
 		//Si falta el valor del parametro actual lo reconoce como error e interrumpe el proceso
 		if len(tmp) != 2 {
