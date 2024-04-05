@@ -1,0 +1,17 @@
+digraph { 
+node [ shape=none ] 
+TablaReportNodo [ label = < <table border="1"> 
+ <tr>
+  <td> Operacion </td> 
+  <td> Path </td> 
+  <td> Contenido </td> 
+  <td> Fecha </td> 
+ </tr> 
+ <tr>
+  <td> mkdir </td> 
+  <td> / </td> 
+  <td> - </td> 
+  <td> 04/04/2024 18:49 </td> 
+ </tr> 
+</table> > ]
+}

@@ -54,6 +54,8 @@ func WriteObject(file *os.File, data interface{}, position int64) error {
 	return nil
 }
 
+//Se puede optimizar el codigo haciento que WriteObject no retorne nada, en su lugar que imprima el error y listo
+
 // Function to Read an object from a bin file
 func ReadObject(file *os.File, data interface{}, position int64) error {
 	file.Seek(position, 0)
@@ -92,6 +94,31 @@ func RepGraphizMBR(path string, contenido string, nombre string) error {
 	err = cmd.Run()
 	if err != nil {
 		log.Fatalf("Error al generar el reporte PNG: %v", err)
+	}
+
+	return err
+}
+
+func Reporte(path string, contenido string) error {
+	//asegurar la ruta
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		fmt.Println("Error al crear el reporte, path: ", err)
+		return err
+	}
+	// Abrir o crear un archivo para escritura
+	file, err := os.Create(path)
+	if err != nil {
+		fmt.Println("Error al crear el archivo:", err)
+		return err
+	}
+	defer file.Close()
+
+	// Escribir en el archivo
+	_, err = file.WriteString(contenido)
+	if err != nil {
+		fmt.Println("Error al escribir en el archivo:", err)
+		return err
 	}
 
 	return err

@@ -1,0 +1,1319 @@
+digraph { 
+ graph [pad=0.5, nodesep=0.5, ranksep=1] 
+ node [ shape=plaintext ] 
+ rankdir=LR 
+
+ Inodo0 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 0 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> 5 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> 8 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> 11 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> 14 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> 17 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> 20 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> 23 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> 26 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> 29 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque0 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 0 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> users.txt </td> <td port='P3'> 1 </td> </tr> 
+    <tr> <td> bin </td> <td port='P4'> 2 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P1 -> Bloque0:P0; 
+
+ Inodo1 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='#7FC97F' colspan="2" port='P0'> Inodo 1 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 1 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> 2 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> 3 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque0:P3 -> Inodo1:P0; 
+
+ Bloque1 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='#ffff99' port='P0'> Bloque 1 </td> </tr> 
+    <tr> <td> 1,G,root<br/>1,U,root,root,123<br/>2,G,usuarios<br/>3,G,adm<br/>0,G,mail<br/>5,G,new </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo1:P1 -> Bloque1:P0; 
+
+ Bloque2 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='#ffff99' port='P0'> Bloque 2 </td> </tr> 
+    <tr> <td> s<br/>6,G,sys<br/>2,U,root,usuario1,password<br/>3,U,usuarios,user1,abc<br/>0,U, </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo1:P2 -> Bloque2:P0; 
+
+ Bloque3 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='#ffff99' port='P0'> Bloque 3 </td> </tr> 
+    <tr> <td> usuarios,user2,abc<br/> </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo1:P3 -> Bloque3:P0; 
+
+ Inodo2 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 2 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 4 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque0:P4 -> Inodo2:P0; 
+
+ Bloque4 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 4 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 2 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo2:P1 -> Bloque4:P0; 
+
+ Bloque5 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 5 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> boot </td> <td port='P3'> 3 </td> </tr> 
+    <tr> <td> cdrom </td> <td port='P4'> 4 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P2 -> Bloque5:P0; 
+
+ Inodo3 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 3 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 6 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque5:P3 -> Inodo3:P0; 
+
+ Bloque6 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 6 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 3 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo3:P1 -> Bloque6:P0; 
+
+ Inodo4 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 4 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 7 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque5:P4 -> Inodo4:P0; 
+
+ Bloque7 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 7 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 4 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo4:P1 -> Bloque7:P0; 
+
+ Bloque8 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 8 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> dev </td> <td port='P3'> 5 </td> </tr> 
+    <tr> <td> etc </td> <td port='P4'> 6 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P3 -> Bloque8:P0; 
+
+ Inodo5 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 5 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 9 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque8:P3 -> Inodo5:P0; 
+
+ Bloque9 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 9 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 5 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo5:P1 -> Bloque9:P0; 
+
+ Inodo6 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 6 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 10 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque8:P4 -> Inodo6:P0; 
+
+ Bloque10 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 10 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 6 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo6:P1 -> Bloque10:P0; 
+
+ Bloque11 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 11 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> home </td> <td port='P3'> 7 </td> </tr> 
+    <tr> <td> lib </td> <td port='P4'> 8 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P4 -> Bloque11:P0; 
+
+ Inodo7 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 7 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 12 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque11:P3 -> Inodo7:P0; 
+
+ Bloque12 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 12 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 7 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> archivos </td> <td port='P3'> 21 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo7:P1 -> Bloque12:P0; 
+
+ Inodo21 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 21 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 32 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque12:P3 -> Inodo21:P0; 
+
+ Bloque32 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 32 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 21 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 7 </td> </tr> 
+    <tr> <td> user </td> <td port='P3'> 22 </td> </tr> 
+    <tr> <td> carpeta1 </td> <td port='P4'> 25 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo21:P1 -> Bloque32:P0; 
+
+ Inodo22 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 22 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 33 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque32:P3 -> Inodo22:P0; 
+
+ Bloque33 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 33 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 22 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 21 </td> </tr> 
+    <tr> <td> docs </td> <td port='P3'> 23 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo22:P1 -> Bloque33:P0; 
+
+ Inodo23 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 23 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 34 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque33:P3 -> Inodo23:P0; 
+
+ Bloque34 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 34 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 23 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 22 </td> </tr> 
+    <tr> <td> usac </td> <td port='P3'> 24 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo23:P1 -> Bloque34:P0; 
+
+ Inodo24 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 24 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 35 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque34:P3 -> Inodo24:P0; 
+
+ Bloque35 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 35 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 24 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 23 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo24:P1 -> Bloque35:P0; 
+
+ Inodo25 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 25 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 36 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque32:P4 -> Inodo25:P0; 
+
+ Bloque36 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 36 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 25 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 21 </td> </tr> 
+    <tr> <td> carpeta2 </td> <td port='P3'> 26 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo25:P1 -> Bloque36:P0; 
+
+ Inodo26 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 26 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 37 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque36:P3 -> Inodo26:P0; 
+
+ Bloque37 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 37 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 26 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 25 </td> </tr> 
+    <tr> <td> carpeta3 </td> <td port='P3'> 27 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo26:P1 -> Bloque37:P0; 
+
+ Inodo27 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 27 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 38 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque37:P3 -> Inodo27:P0; 
+
+ Bloque38 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 38 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 27 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 26 </td> </tr> 
+    <tr> <td> carpeta4 </td> <td port='P3'> 28 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo27:P1 -> Bloque38:P0; 
+
+ Inodo28 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 28 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 39 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque38:P3 -> Inodo28:P0; 
+
+ Bloque39 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 39 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 28 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 27 </td> </tr> 
+    <tr> <td> carpeta5 </td> <td port='P3'> 29 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo28:P1 -> Bloque39:P0; 
+
+ Inodo29 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 29 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 40 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque39:P3 -> Inodo29:P0; 
+
+ Bloque40 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 40 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 29 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 28 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo29:P1 -> Bloque40:P0; 
+
+ Inodo8 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 8 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 13 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque11:P4 -> Inodo8:P0; 
+
+ Bloque13 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 13 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 8 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo8:P1 -> Bloque13:P0; 
+
+ Bloque14 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 14 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> lib64 </td> <td port='P3'> 9 </td> </tr> 
+    <tr> <td> media </td> <td port='P4'> 10 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P5 -> Bloque14:P0; 
+
+ Inodo9 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 9 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 15 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque14:P3 -> Inodo9:P0; 
+
+ Bloque15 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 15 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 9 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo9:P1 -> Bloque15:P0; 
+
+ Inodo10 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 10 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 16 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque14:P4 -> Inodo10:P0; 
+
+ Bloque16 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 16 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 10 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo10:P1 -> Bloque16:P0; 
+
+ Bloque17 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 17 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> mnt </td> <td port='P3'> 11 </td> </tr> 
+    <tr> <td> opt </td> <td port='P4'> 12 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P6 -> Bloque17:P0; 
+
+ Inodo11 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 11 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 18 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque17:P3 -> Inodo11:P0; 
+
+ Bloque18 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 18 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 11 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo11:P1 -> Bloque18:P0; 
+
+ Inodo12 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 12 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 19 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque17:P4 -> Inodo12:P0; 
+
+ Bloque19 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 19 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 12 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo12:P1 -> Bloque19:P0; 
+
+ Bloque20 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 20 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> proc </td> <td port='P3'> 13 </td> </tr> 
+    <tr> <td> run </td> <td port='P4'> 14 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P7 -> Bloque20:P0; 
+
+ Inodo13 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 13 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 21 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque20:P3 -> Inodo13:P0; 
+
+ Bloque21 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 21 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 13 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo13:P1 -> Bloque21:P0; 
+
+ Inodo14 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 14 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 22 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque20:P4 -> Inodo14:P0; 
+
+ Bloque22 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 22 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 14 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo14:P1 -> Bloque22:P0; 
+
+ Bloque23 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 23 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> sbin </td> <td port='P3'> 15 </td> </tr> 
+    <tr> <td> snap </td> <td port='P4'> 16 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P8 -> Bloque23:P0; 
+
+ Inodo15 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 15 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 24 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque23:P3 -> Inodo15:P0; 
+
+ Bloque24 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 24 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 15 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo15:P1 -> Bloque24:P0; 
+
+ Inodo16 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 16 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 25 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque23:P4 -> Inodo16:P0; 
+
+ Bloque25 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 25 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 16 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo16:P1 -> Bloque25:P0; 
+
+ Bloque26 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 26 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> srv </td> <td port='P3'> 17 </td> </tr> 
+    <tr> <td> sys </td> <td port='P4'> 18 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P9 -> Bloque26:P0; 
+
+ Inodo17 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 17 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 27 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque26:P3 -> Inodo17:P0; 
+
+ Bloque27 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 27 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 17 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo17:P1 -> Bloque27:P0; 
+
+ Inodo18 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 18 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 28 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque26:P4 -> Inodo18:P0; 
+
+ Bloque28 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 28 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 18 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo18:P1 -> Bloque28:P0; 
+
+ Bloque29 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 29 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 0 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> tmp </td> <td port='P3'> 19 </td> </tr> 
+    <tr> <td> var </td> <td port='P4'> 20 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo0:P10 -> Bloque29:P0; 
+
+ Inodo19 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 19 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 30 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque29:P3 -> Inodo19:P0; 
+
+ Bloque30 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 30 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 19 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo19:P1 -> Bloque30:P0; 
+
+ Inodo20 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='skyblue' colspan="2" port='P0'> Inodo 20 </td> </tr> 
+    <tr> <td> AD1 </td> <td port='P1'> 31 </td> </tr> 
+    <tr> <td> AD2 </td> <td port='P2'> -1 </td> </tr> 
+    <tr> <td> AD3 </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> AD4 </td> <td port='P4'> -1 </td> </tr> 
+    <tr> <td> AD5 </td> <td port='P5'> -1 </td> </tr> 
+    <tr> <td> AD6 </td> <td port='P6'> -1 </td> </tr> 
+    <tr> <td> AD7 </td> <td port='P7'> -1 </td> </tr> 
+    <tr> <td> AD8 </td> <td port='P8'> -1 </td> </tr> 
+    <tr> <td> AD9 </td> <td port='P9'> -1 </td> </tr> 
+    <tr> <td> AD10 </td> <td port='P10'> -1 </td> </tr> 
+    <tr> <td> AD11 </td> <td port='P11'> -1 </td> </tr> 
+    <tr> <td> AD12 </td> <td port='P12'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD13 </td> <td port='P13'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD14 </td> <td port='P14'> -1 </td> </tr> 
+    <tr> <td bgcolor='pink'> AD15 </td> <td port='P15'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Bloque29:P4 -> Inodo20:P0; 
+
+ Bloque31 [ 
+  label = < 
+   <table border="0" cellborder="1" cellspacing="0"> 
+    <tr> <td bgcolor='orchid' colspan="2" port='P0'> Bloque 31 </td> </tr> 
+    <tr> <td> . </td> <td port='P1'> 20 </td> </tr> 
+    <tr> <td> .. </td> <td port='P2'> 0 </td> </tr> 
+    <tr> <td> - </td> <td port='P3'> -1 </td> </tr> 
+    <tr> <td> - </td> <td port='P4'> -1 </td> </tr> 
+   </table> 
+  > 
+ ]; 
+
+ Inodo20:P1 -> Bloque31:P0; 
+
+}

@@ -1,0 +1,34 @@
+#execute -path=archivosEntradaPrueba/pruebasLogin.txt
+
+#CREACION DE DISCOS------------------------------------------------
+#Mkdisk -size=20 -unit=m
+
+#CREACION DE PARTICION------------------------------------------------
+#fdisk -type=P -unit=K -name=Part1 -size=7680 -driveletter=A -fit=BF
+
+#MOUNT------------------------------------------------
+#mount -driveletter=A -name=Part1 #A148 -> id1 -> cambiar el 191a por el ID que a ustedes les genera
+
+#CREACION DE SISTEMA DE ARCHIVOS------------------------------------------------
+#mkfs -type=full -id=A148 -fs=2fs
+
+#LOGIN------------------------------------------------
+login -user=root -pass=123 -id=A148
+
+#login -user=root -pass=123 -id=A148 #ERR SESION INICIADA
+
+#CREACION DE GRUPOS
+#mkgrp -name=usuarios
+#mkgrp -name=adm
+#mkgrp -name=mail
+#mkgrp -name=news
+#mkgrp -name=sys
+#mkgrp -name=sys #ERR YA EXISTE EL GRUPO
+cat -file="/users.txt"
+
+#ELIMINANDO GRUPOS------------------------------------------------
+rmgrp -name=mail
+cat -file=/users.txt
+
+#rep -id=A148 -path="/MIA/Reportes/reporte1_tree.jpg" -name=tree
+

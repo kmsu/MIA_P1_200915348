@@ -1,0 +1,56 @@
+#execute -path=archivosEntradaPrueba/pruebaEXT2.txt
+
+#CREACION DE DISCOS------------------------------------------------
+#Mkdisk -size=20 -unit=m
+#Mkdisk -size=20 -unit=m
+
+#CREACION DE PARTICION------------------------------------------------
+#fdisk -type=P -unit=K -name=Part1 -size=7680 -driveletter=A -fit=BF
+#fdisk -type=P -unit=K -name=Part1 -size=7680 -driveletter=B -fit=BF
+
+#MOUNT------------------------------------------------
+#mount -driveletter=A -name=Part1 #A148 -> id1 -> cambiar el 191a por el ID que a ustedes les genera
+#mount -driveletter=B -name=Part1 #B148 -> id2 -> cambiar el 192a por el ID que a ustedes les genera
+
+#CREACION DE SISTEMA DE ARCHIVOS------------------------------------------------
+mkfs -type=full -id=A148 -fs=2fs
+#mkfs -type=full -id=B148 -fs=3fs
+#mkfs -type=full -id=B148 -fs=4fs #Error no se puede formatear 4fs
+
+#EXT2------------------------------------------------
+#------------------------REPORTES 1----------------
+#rep -id=A148 -path=/MIA/Reportes/reporte1_sb.jpg -name=sb
+#rep -id=A148 -path="/MIA/Reportes/reporte1_tree.jpg" -name=tree
+#rep -id=B148 -path="/MIA/Reportes/reporte2_tree.jpg" -name=tree
+#rep -id=B148 -path=/MIA/Reportes/reporte2_sb.jpg -name=sb
+
+#pause
+#mkdisk -param=x #ERR
+
+#LOGIN------------------------------------------------
+login -user=root -pass=123 -id=A148
+
+#login -user=root -pass=123 -id=A148 #ERR SESION INICIADA
+
+#CREACION DE GRUPOS
+#mkgrp -name=usuarios
+#mkgrp -name=adm
+#mkgrp -name=mail
+#mkgrp -name=news
+#mkgrp -name=sys
+#mkgrp -name=sys #ERR YA EXISTE EL GRUPO
+
+#rep -id=A148 -path=/MIA/Reportes/reporte1_sb.jpg -name=sb
+#rep -id=A148 -path="/MIA/Reportes/reporte1_tree.jpg" -name=tree
+
+#logout
+#logout #ERR NO HAY SESION INICIADA
+
+#-------------------- hasta aqui el avanzado -------------------------------------------------------------------
+
+#rep -id=B148 -path=/MIA/Reportes/reporte1_j.jpg" -name=journaling
+
+#rep -id=B148 -path=/MIA/Reportes/reporte5_bm_inode.txt -name=bm_inode
+#rep -id=A148 -path=/MIA/Reportes/reporte5_bm_block.txt -name=bm_block
+
+#login -user=root -pass=123 -id=A148

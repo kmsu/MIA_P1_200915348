@@ -1,0 +1,43 @@
+#execute -path=archivosEntradaPrueba/pruebaCarpetas.txt
+
+#LOGIN------------------------------------------------
+login -user=usuario1 -pass=password -id=A148
+
+#CREACION DE CARPETAS------------------------------------------------
+#mkdir -path=/bin
+#mkdir -path=/boot
+#mkdir -path=/cdrom
+#mkdir -path=/dev
+#mkdir -path=/etc
+#mkdir -path=/home
+#mkdir -path=/lib
+#mkdir -path=/lib64
+#mkdir -path=/media
+#mkdir -path=/mnt
+#mkdir -path=/opt
+#mkdir -path=/proc
+#mkdir -path=/run
+#mkdir -path=/sbin
+#mkdir -path=/snap
+#mkdir -path=/srv
+#mkdir -path=/sys
+#mkdir -path=/tmp
+#mkdir -path=/var
+
+#mkdir -path="/home/archivos/archivos 19" #error no viene el parametro -r
+#mkdir -r -path=/home/archivos/user/docs/usac
+#mkdir -r -path=/home/archivos/carpeta1/carpeta2/carpeta3/carpeta4/carpeta5
+mkdir -r -path=/home/kevin/carpeta1/carpeta2/carpeta3/carpeta4/carpeta5
+
+#CREAR CARPETA INDIRECTOS------------------------------------------------
+#mkdir -path=/Findirecto
+#mkdir -path=/Findirecto2
+#mkdir -path=/kevin
+
+#------------------------REPORTE 2----------------
+rep -id=A148 -path="/MIA/Reportes/reporte1_tree.jpg" -name=tree
+
+#rep -id=A148 -path=/MIA/Reportes/reporte1_sb.jpg -name=sb
+#rep -id=A148 -path=/MIA/Reportes/reporte5_bm_inode.txt -name=bm_inode
+#rep -id=A148 -path=/MIA/Reportes/reporte5_bm_block.txt -name=bm_block
+#rep -id=B148 -path=/MIA/Reportes/reporte3_j.jpg" -name=journaling
