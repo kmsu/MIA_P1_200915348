@@ -76,7 +76,7 @@ type Fileblock struct {
 	B_content [64]byte //contenido del archivo
 }
 
-// Metodo que anula bytes nulos para B_content
+// Metodo que anula bytes nulos para B_content PARA EL REPORTE
 func GetB_content(nombre string) string {
 	// Reemplazar todos los saltos de línea con un guion (-)
 	nombre = strings.ReplaceAll(nombre, "\n", "<br/>")

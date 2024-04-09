@@ -102,11 +102,13 @@ func Cat(parametros []string) {
 
 		//buscar el contenido del archivo especificado
 		for _, item := range file {
-			ruta := strings.TrimPrefix(item, "/")
 			//buscar el inodo que contiene el archivo buscado
-			inodo := HerramientasInodos.BuscarInodo(ruta, superBloque, disco)
-			//Si el inodo esta vacio significa que no se encontro el archivo
-			if inodo.I_gid != 0 {
+			idInodo := HerramientasInodos.BuscarInodo(0, item, superBloque, disco)
+			var inodo Structs.Inode
+
+			//idInodo: solo puede existir archivos desde el inodo 1 en adelante (-1 no existe, 0 es raiz)
+			if idInodo > 0 {
+				Herramientas.ReadObject(disco, &inodo, int64(superBloque.S_inode_start+(idInodo*int32(binary.Size(Structs.Inode{})))))
 				//recorrer los fileblocks del inodo para obtener toda su informacion
 				for _, idBlock := range inodo.I_block {
 					if idBlock != -1 {

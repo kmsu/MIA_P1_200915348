@@ -94,7 +94,7 @@ func Mkdir(parametros []string) {
 
 			//Crear el directorio
 			ruta := strings.TrimPrefix(path, "/")
-			crearCarpeta(0, ruta, superBloque, int64(mbr.Partitions[part].Start), disco, r)
+			crearCarpeta2(0, ruta, superBloque, int64(mbr.Partitions[part].Start), disco, r)
 			//crearCarpeta(0, rutaInit, superBloque, iSuperBloque, file, r)
 		}
 	} else {
@@ -104,7 +104,7 @@ func Mkdir(parametros []string) {
 }
 
 // Metodo para buscar y crear los directorios
-func crearCarpeta(inod int32, path string, superBloque Structs.Superblock, iSuperBloque int64, file *os.File, r bool) {
+func crearCarpeta2(inod int32, path string, superBloque Structs.Superblock, iSuperBloque int64, file *os.File, r bool) {
 	//NOTA: TODOS LOS INODOS APUNTAN A UN BLOQUE
 	ruta := strings.Split(path, "/")
 	//la busqueda inicia en el inodo 0
@@ -327,7 +327,7 @@ func buscarInodo(idInodo int32, path []string, rutaInit string, superBloque Stru
 			//se tiene permiso de crear padre
 			fmt.Println("Crear la carpeta padre ", path[0])
 			//Creo la carpeta padre
-			crearCarpeta(idInodo, path[0], superBloque, iSuperBloque, file, r)
+			crearCarpeta2(idInodo, path[0], superBloque, iSuperBloque, file, r)
 			//mando a crear las demas rutas
 			//crearCarpeta(0, rutaInit, superBloque, iSuperBloque, file, r)
 			fmt.Println("tamaño path ", len(path))
@@ -337,6 +337,6 @@ func buscarInodo(idInodo int32, path []string, rutaInit string, superBloque Stru
 		}
 	} else if len(path) == 1 {
 		fmt.Println("Cree carpeta cuando venia solo un path que no existia ", path)
-		crearCarpeta(idInodo, path[0], superBloque, iSuperBloque, file, r)
+		crearCarpeta2(idInodo, path[0], superBloque, iSuperBloque, file, r)
 	}
 }

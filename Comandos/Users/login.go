@@ -15,6 +15,7 @@ func Login(parametros []string) {
 	var pass string //obligatorio
 	var id string   //obligatorio. Id de la particion en la que quiero iniciar sesion
 	paramC := true
+	//EN TODA LA SECCION DE USUARIOS NO SE USA APUNTADORES INDIRECTOS
 
 	for _, parametro := range parametros[1:] {
 		//quito los espacios en blano despues de cada parametro

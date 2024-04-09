@@ -1,0 +1,25 @@
+#execute -path=archivosEntradaPrueba/ForExtCarpetas.txt
+
+#CREACION DE DISCOS------------------------------------------------
+Mkdisk -size=20 -unit=m
+
+#CREACION DE PARTICION------------------------------------------------
+fdisk -type=P -unit=K -name=Part1 -size=7680 -driveletter=A -fit=BF
+
+#MOUNT------------------------------------------------
+mount -driveletter=A -name=Part1
+
+#CREACION DE SISTEMA DE ARCHIVOS------------------------------------------------
+mkfs -type=full -id=A148 -fs=2fs
+
+#LOGIN------------------------------------------------
+login -user=root -pass=123 -id=A148
+
+#CREACION DE CARPETAS------------------------------------------------
+mkdir -path=/bin
+mkdir -path=/boot
+mkdir -path=/cdrom
+mkdir -path=/dev
+mkdir -path=/etc
+mkdir -path=/home
+mkdir -path=/lib
