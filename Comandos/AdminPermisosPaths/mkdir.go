@@ -94,15 +94,13 @@ func Mkdir(parametros []string) {
 				fmt.Println("MKDIR Error. Particion sin formato")
 			}
 
-			//No existe buscar padre
+			//Validar cada carpeta para ver si existe y crear los padres inexistentes
 			stepPath := strings.Split(path, "/")
-			buscar := ""
 			idInicial := int32(0)
 			idActual := int32(0)
 			crear := -1
 			for i, itemPath := range stepPath[1:] {
-				buscar = "/" + itemPath
-				idActual = HerramientasInodos.BuscarInodo(idInicial, buscar, superBloque, disco)
+				idActual = HerramientasInodos.BuscarInodo(idInicial, "/"+itemPath, superBloque, disco)
 				if idInicial != idActual {
 					idInicial = idActual
 				} else {

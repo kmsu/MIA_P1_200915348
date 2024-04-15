@@ -1,0 +1,26 @@
+#execute -path=archivosEntradaPrueba/pruebaArchivos.txt
+
+login -user=root -pass=123 -id=A148
+
+#VALIDAR ERRORES
+#mkfile -r -path="/home/archivos/b1.txt" -size=-45 #ERR NEGATIVO
+#mkfile -path="/home/archivos/noexiste/b1.txt" #ERRNO EXISTE RUTA
+
+#Creacion correcta
+#mkfile -path=/home/archivos/user/docs/Tarea.txt -size=75
+#mkfile -path=/home/archivos/user/docs/Tarea2.txt -size=768
+
+#RECURSIVO
+#mkfile -r -path=/home/archivos/user/docs/usac/archivos/proyectos/fase1/entrada.txt #RECURSIVO
+
+#Parametro cont
+#mkfile -path=/home/archivos/user/docs/Tarea3.txt -size=10 #-cont=/home/archivos/user/Desktop/IA.txt
+
+
+
+rep -id=A148 -path="/MIA/Reportes/reporte1_tree.jpg" -name=tree
+#cat -file="/home/archivos/user/docs/Tarea2.txt"
+
+rep -id=A148 -path=/MIA/Reportes/reporte3_sb.jpg -name=sb
+rep -id=A148 -path=/MIA/Reportes/reporte4_bm_inode.txt -name=bm_inode
+rep -id=A148 -path=/MIA/Reportes/reporte5_bm_block.txt -name=bm_block

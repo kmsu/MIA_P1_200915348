@@ -1,6 +1,6 @@
 #execute -path=archivosEntradaPrueba/pruebaCarpetas.txt
 
-login -user=root -pass=123 -id=A148
+#login -user=root -pass=123 -id=A148
 
 #mkdir -path="/home/archivos/archivos 19" #error no viene el parametro -r
 
@@ -11,7 +11,7 @@ mkdir -r -path=/home/archivos/carpeta1/carpeta2/carpeta3/carpeta4/carpeta5
 #mkdir -path=/home/kevin/carpeta6/carpeta7/carpeta8/carpeta4/carpeta5
 #mkdir -r -path=/home
 #mkdir -r -path=/kevin
-#mkdir -r -path=/home/archivos/user/docs/usac/prueba
+mkdir -r -path=/home/archivos/user/docs/usac
 #mkdir -r -path=/home/kevin/carpeta6/carpeta7/carpeta8/carpeta4/carpeta5
 
 

@@ -188,6 +188,14 @@ func analizar(entrada string) {
 			fmt.Println("MKDIR ERROR: parametros no encontrados")
 		}
 
+	} else if strings.ToLower(parametros[0]) == "mkfile" {
+		//MKDIR
+		if len(parametros) > 1 {
+			DFPM.Mkfile(parametros)
+		} else {
+			fmt.Println("MKDIR ERROR: parametros no encontrados")
+		}
+
 		//--------------------------------------- OTROS ------------------------------------------------------------
 	} else if strings.ToLower(parametros[0]) == "rep" {
 		//REP

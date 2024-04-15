@@ -86,9 +86,9 @@ func buscarIrecursivo(idInodo int32, path []string, iStart int32, bStart int32, 
 	return -1
 }
 
-func CrearCarpeta(idInode int32, carpeta string, initSuperBlocque int64, disco *os.File) int32 {
+func CrearCarpeta(idInode int32, carpeta string, initSuperBloque int64, disco *os.File) int32 {
 	var superBloque Structs.Superblock
-	Herramientas.ReadObject(disco, &superBloque, initSuperBlocque)
+	Herramientas.ReadObject(disco, &superBloque, initSuperBloque)
 
 	var inodo Structs.Inode
 	Herramientas.ReadObject(disco, &inodo, int64(superBloque.S_inode_start+(idInode*int32(binary.Size(Structs.Inode{})))))
@@ -155,30 +155,35 @@ func CrearCarpeta(idInode int32, carpeta string, initSuperBlocque int64, disco *
 					superBloque.S_first_blo += 1
 					superBloque.S_first_ino += 1
 					//Escribir en el archivo los cambios del superBloque
-					Herramientas.WriteObject(disco, superBloque, initSuperBlocque)
+					Herramientas.WriteObject(disco, superBloque, initSuperBloque)
 
 					//escribir el bitmap de bloques (se uso un bloque).
 					Herramientas.WriteObject(disco, byte(1), int64(superBloque.S_bm_block_start+block))
 
 					//escribir el bitmap de inodos (se uso un inodo).
 					Herramientas.WriteObject(disco, byte(1), int64(superBloque.S_bm_inode_start+ino))
-					//fmt.Println(iSuperBloque)
+					//retorna el inodo creado (por si va a crear otra carpeta en ese inodo)
 					return ino
 				}
 			} //fin de for de buscar espacio en el bloque actual (existente)
 		} else {
-			//No hay bloques con espacio disponible
+			//No hay bloques con espacio disponible (existe al menos el primer bloque pero esta lleno)
 			//modificar el inodo actual (por el nuevo apuntador)
 			block := superBloque.S_first_blo //primer bloque libre
 			inodo.I_block[i] = block
 			//Escribir los cambios del inodo inicial
 			Herramientas.WriteObject(disco, &inodo, int64(superBloque.S_inode_start+(idInode*int32(binary.Size(Structs.Inode{})))))
 
-			//creo el primer bloque que va a apuntar a la carpeta
+			//cargo el primer bloque del inodo actual para tomar los datos de actual y padre (son los mismos para el nuevo)
+			var folderBlock Structs.Folderblock
+			bloque := inodo.I_block[0] //cargo el primer folderblock para obtener los datos del actual y su padre
+			Herramientas.ReadObject(disco, &folderBlock, int64(superBloque.S_block_start+(bloque*int32(binary.Size(Structs.Folderblock{})))))
+
+			//creo el bloque que va a apuntar a la nueva carpeta
 			var newFolderBlock1 Structs.Folderblock
-			newFolderBlock1.B_content[0].B_inodo = 0 //estoy en inodo0
+			newFolderBlock1.B_content[0].B_inodo = folderBlock.B_content[0].B_inodo //actual
 			copy(newFolderBlock1.B_content[0].B_name[:], ".")
-			newFolderBlock1.B_content[1].B_inodo = 0 //el padre es 0
+			newFolderBlock1.B_content[1].B_inodo = folderBlock.B_content[1].B_inodo //padre
 			copy(newFolderBlock1.B_content[1].B_name[:], "..")
 			ino := superBloque.S_first_ino                        //primer inodo libre
 			newFolderBlock1.B_content[2].B_inodo = ino            //apuntador al inodo nuevo
@@ -227,7 +232,7 @@ func CrearCarpeta(idInode int32, carpeta string, initSuperBlocque int64, disco *
 			superBloque.S_free_blocks_count -= 2
 			superBloque.S_first_blo += 2
 			superBloque.S_first_ino += 1
-			Herramientas.WriteObject(disco, superBloque, initSuperBlocque)
+			Herramientas.WriteObject(disco, superBloque, initSuperBloque)
 
 			//escribir el bitmap de bloques (se uso dos bloques: block y block2).
 			Herramientas.WriteObject(disco, byte(1), int64(superBloque.S_bm_block_start+block))
