@@ -111,7 +111,6 @@ func Mkdir(parametros []string) {
 
 			if crear != -1 {
 				if crear == len(stepPath)-1 {
-					fmt.Println("Crear la carpeta ", stepPath[crear])
 					HerramientasInodos.CrearCarpeta(idInicial, stepPath[crear], int64(mbr.Partitions[part].Start), disco)
 				} else {
 					if r {

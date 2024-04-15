@@ -212,11 +212,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 					ino := superB.S_first_ino //primer inodo libre
 					folderBlock.B_content[j].B_inodo = ino
 					//ACTUALIZAR EL FOLDERBLOCK ACTUAL (idBloque) EN EL ARCHIVO
-					fmt.Println("Bloque ", idBloque)
-					fmt.Println(Structs.GetB_name(string(folderBlock.B_content[0].B_name[:])), "         | ", folderBlock.B_content[0].B_inodo)
-					fmt.Println(Structs.GetB_name(string(folderBlock.B_content[1].B_name[:])), "        | ", folderBlock.B_content[1].B_inodo)
-					fmt.Println(Structs.GetB_name(string(folderBlock.B_content[2].B_name[:])), " | ", folderBlock.B_content[2].B_inodo)
-					fmt.Println(Structs.GetB_name(string(folderBlock.B_content[3].B_name[:])), "         | ", folderBlock.B_content[3].B_inodo)
 					Herramientas.WriteObject(disco, folderBlock, int64(superB.S_block_start+(idBloque*int32(binary.Size(Structs.Folderblock{})))))
 
 					//creo el nuevo inodo archivo
@@ -237,15 +232,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 					for i := int32(0); i < 15; i++ {
 						newInodo.I_block[i] = -1
 					}
-
-					fmt.Println("")
-					fmt.Println("bloques libres ", superB.S_free_blocks_count)
-					fmt.Println("inodos libres ", superB.S_free_inodes_count)
-					fmt.Println("Primer bloque libre ", superB.S_first_blo)
-					fmt.Println("Primer inodo libre ", superB.S_first_ino)
-
-					fmt.Println("")
-					fmt.Println("Inodo ", ino)
 
 					//Cargar contenido si no viene ningun contenido en el parametro cont
 					guardarContenido := ""
@@ -291,9 +277,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 						//escribir el bitmap de bloques (se usa un bloque por iteracion).
 						Herramientas.WriteObject(disco, byte(1), int64(superB.S_bm_block_start+fileblock))
 
-						fmt.Println("\nNUEVO FILEBLOCK")
-						fmt.Println("contenido ", Structs.GetB_content(string(newFileBlock.B_content[:])))
-
 						//validar si queda data que agregar al archivo para continuar con el ciclo o detenerlo
 						calculo := len(guardarContenido[fin:])
 						if calculo > 64 {
@@ -311,17 +294,12 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 					}
 
 					//escribo el nuevo inodo (ino)
-					fmt.Println("AD ", newInodo.I_block)
 					Herramientas.WriteObject(disco, newInodo, int64(superB.S_inode_start+(ino*int32(binary.Size(Structs.Inode{})))))
 
 					//modifico el superbloque por el inodo usado
 					superB.S_free_inodes_count -= 1
 					superB.S_first_ino += 1
 					//Escribir en el archivo los cambios del superBloque
-					fmt.Println("bloques libres ", superB.S_free_blocks_count)
-					fmt.Println("inodos libres ", superB.S_free_inodes_count)
-					fmt.Println("Primer bloque libre ", superB.S_first_blo)
-					fmt.Println("Primer inodo libre ", superB.S_first_ino)
 					Herramientas.WriteObject(disco, superB, initSuperBloque)
 
 					//escribir el bitmap de inodos (se uso un inodo).
@@ -331,8 +309,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 				}
 			} //fin de for de buscar espacio en el bloque actual (existente)
 		} else {
-			fmt.Println("Crear nuevo bloque")
-
 			//No hay bloques con espacio disponible
 			//modificar el inodo actual (por el nuevo apuntador)
 			block := superB.S_first_blo //primer bloque libre
@@ -384,15 +360,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 				newInodo.I_block[i] = -1
 			}
 
-			fmt.Println("")
-			fmt.Println("bloques libres ", superB.S_free_blocks_count)
-			fmt.Println("inodos libres ", superB.S_free_inodes_count)
-			fmt.Println("Primer bloque libre ", superB.S_first_blo)
-			fmt.Println("Primer inodo libre ", superB.S_first_ino)
-
-			fmt.Println("")
-			fmt.Println("Inodo ", ino)
-
 			//Cargar contenido si no viene ningun contenido en el parametro cont
 			guardarContenido := ""
 			if contenido == "" {
@@ -437,9 +404,6 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 				//escribir el bitmap de bloques (se usa un bloque por iteracion).
 				Herramientas.WriteObject(disco, byte(1), int64(superB.S_bm_block_start+fileblock))
 
-				fmt.Println("\nNUEVO FILEBLOCK")
-				fmt.Println("contenido ", Structs.GetB_content(string(newFileBlock.B_content[:])))
-
 				//validar si queda data que agregar al archivo para continuar con el ciclo o detenerlo
 				calculo := len(guardarContenido[fin:])
 				if calculo > 64 {
@@ -457,17 +421,12 @@ func crearArchivo(idInodo int32, file string, size int, contenido string, initSu
 			}
 
 			//escribo el nuevo inodo (ino)
-			fmt.Println("AD ", newInodo.I_block)
 			Herramientas.WriteObject(disco, newInodo, int64(superB.S_inode_start+(ino*int32(binary.Size(Structs.Inode{})))))
 
 			//modifico el superbloque por el inodo usado
 			superB.S_free_inodes_count -= 1
 			superB.S_first_ino += 1
 			//Escribir en el archivo los cambios del superBloque
-			fmt.Println("bloques libres ", superB.S_free_blocks_count)
-			fmt.Println("inodos libres ", superB.S_free_inodes_count)
-			fmt.Println("Primer bloque libre ", superB.S_first_blo)
-			fmt.Println("Primer inodo libre ", superB.S_first_ino)
 			Herramientas.WriteObject(disco, superB, initSuperBloque)
 
 			//escribir el bitmap de inodos (se uso un inodo).
